@@ -4,7 +4,8 @@ A static, dependency-free site of single-purpose developer tools — a password
 generator, a UUID generator (v4 and v7), and an IMEI generator and validator —
 plus the content and trust pages needed for a Google AdSense application.
 
-Configured for **https://dummy4u.com/**. Re-run `configure.sh` if the domain, contact address, owner, or governing law changes.
+Live at **https://dummy4u.com/**, hosted on GitHub Pages from
+`github.com/prasingh-work/dummy4u`. Re-run `configure.sh` if the domain, contact address, owner, or governing law changes.
 
 ## Layout
 
@@ -22,8 +23,7 @@ terms.html
 contact.html
 404.html
 robots.txt  sitemap.xml       Domain root
-ads.txt.example               Domain root, after approval
-configure.sh
+CNAME  .nojekyll              Required by GitHub Pages
 
 password/index.html           Password generator — /password/
 password/tool.js
@@ -77,33 +77,7 @@ Gzipped, excluding ads. Four requests cold, two warm. No framework, no web
 fonts, no analytics. For scale: a single AdSense unit is 100–300 KB, so the ad
 tag — not this code — is what determines how heavy a page feels.
 
-## Configure, then deploy
-
-```sh
-./configure.sh yourdomain.com you@yourdomain.com "Your Name" "India"
-```
-
-That rewrites `https://example.com`, `contact@example.com`, `__OWNER__` and
-`__JURISDICTION__` across every HTML, XML and TXT file, then reports anything it
-missed.
-
-**Already applied** for this deployment: base URL `https://dummy4u.com/`,
-contact `support@dummy4u.com`, owner `dummy4u.com`, governing law India. Re-run
-only if one of those changes.
-
-Local preview — just open the file:
-
-```sh
-open index.html
-```
-
-All paths are relative, so the site works from `file://` as well as from a server.
-A server is only needed to exercise the async Clipboard API path instead of the
-`execCommand` fallback:
-
-```sh
-python3 -m http.server 8000     # http://localhost:8000
-```
+## Deploy
 
 ### Hosting on GitHub Pages
 

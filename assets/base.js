@@ -105,7 +105,6 @@ var T = (function () {
   }
 
   return {
-    nextByte: nextByte,
     randomBelow: randomBelow,
     randomBytes: randomBytes,
     copy: copy,

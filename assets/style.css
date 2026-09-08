@@ -264,7 +264,6 @@ button:active { transform: translateY(1px); }
   font-size: 1.05rem;
 }
 
-.verdict-head .mark { font-size: 1.2rem; line-height: 1; }
 .verdict.is-ok .verdict-head { color: var(--ok); }
 .verdict.is-bad .verdict-head { color: var(--err); }
 .verdict p { margin: 6px 0 0; font-size: .9rem; color: var(--muted); }
