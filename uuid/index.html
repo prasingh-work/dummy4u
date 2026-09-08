@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>UUID Generator — v4 and Time-Ordered v7</title>
+<meta name="description" content="Generate UUIDs in your browser: random v4 or time-ordered v7 per RFC 9562. One or thousands at a time, with CSV export. Nothing is uploaded." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/uuid/" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="UUID Generator — v4 and Time-Ordered v7" />
+<meta property="og:description" content="Generate random v4 or time-ordered v7 UUIDs per RFC 9562, singly or in bulk with CSV export." />
+<meta property="og:url" content="https://dummy4u.com/uuid/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "UUID Generator",
+  "url": "https://dummy4u.com/uuid/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Generates RFC 9562 UUIDs, version 4 (random) and version 7 (time-ordered), in the browser with CSV export.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "All tools", "item": "https://dummy4u.com/" },
+    { "@type": "ListItem", "position": 2, "name": "UUID Generator", "item": "https://dummy4u.com/uuid/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tool">Skip to the generator</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="../index.html">All tools</a>
+      <a href="index.html" aria-current="page">UUID</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All tools</a> <span aria-hidden="true">&rsaquo;</span> UUID generator</nav>
+    <div class="hero">
+      <h1>UUID Generator</h1>
+      <p class="tagline">Random v4 or time-ordered v7, per RFC 9562. One, or ten thousand.</p>
+    </div>
+
+    <section class="card" id="tool" aria-label="UUID generator">
+      <form id="gen-form">
+        <div class="row">
+          <div class="field">
+            <label class="label" for="version">Version</label>
+            <select id="version">
+              <option value="4" selected>v4 — random</option>
+              <option value="7">v7 — time-ordered</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label" for="count">How many</label>
+            <input id="count" type="number" value="1" min="1" max="10000" step="1" inputmode="numeric" autocomplete="off" />
+          </div>
+          <button class="primary" id="generate" type="submit">Generate</button>
+        </div>
+
+        <fieldset class="opts">
+          <legend class="label">Format</legend>
+          <label><input type="checkbox" id="uppercase" /> Uppercase</label>
+          <label><input type="checkbox" id="no-hyphens" /> No hyphens</label>
+        </fieldset>
+      </form>
+
+      <div class="result">
+        <span class="label" id="out-label">Result</span>
+        <output id="single" role="button" tabindex="0" aria-labelledby="out-label" title="Click to copy">&mdash;</output>
+        <div id="list" role="button" tabindex="0" aria-labelledby="out-label" title="Click to copy all" hidden><pre id="list-text"></pre></div>
+        <p class="truncated" id="truncated" hidden></p>
+      </div>
+
+      <div class="actions">
+        <button class="secondary" id="copy" type="button">Copy</button>
+        <button class="secondary" id="download" type="button" hidden>Download CSV</button>
+      </div>
+
+      <p class="status" id="gen-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- Ad slot: paste your AdSense unit here. Kept below the tool on purpose. -->
+    <div class="ad-slot" id="ad-top"></div>
+
+    <div class="prose">
+
+      <h2>Which version you want</h2>
+      <p>If you are generating an identifier that will be stored as a database key, you almost certainly want <strong>v7</strong>. For anything else — a correlation ID, a filename, an idempotency key — <strong>v4</strong> is fine and is what most libraries still give you by default.</p>
+      <p>The difference is ordering. A v4 UUID is 122 random bits, so consecutive values land in unrelated places. A v7 UUID starts with a millisecond timestamp, so values generated close together sort close together, both lexically and as bytes.</p>
+
+      <h2>Why that matters for a database</h2>
+      <p>B-tree indexes like inserts that arrive in roughly increasing order: the hot pages stay in memory and the tree grows at one edge. Random v4 keys defeat this. Every insert lands on an arbitrary page, so the working set becomes the whole index, page splits happen everywhere, and the index fragments. On a large table the difference between v4 and v7 primary keys is visible in write throughput and in how much of the index has to stay resident.</p>
+      <p>v7 restores that locality while keeping the properties you chose a UUID for — generated anywhere, no coordination, no central sequence. The cost is that the creation time is embedded in the value and is trivially readable, which is a leak if the row's existence is meant to be private.</p>
+
+      <h2>What is inside a v7</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Field</th><th>Bits</th><th>Contents</th></tr></thead>
+          <tbody>
+            <tr><td><code>unix_ts_ms</code></td><td>48</td><td>Unix timestamp in milliseconds, big-endian</td></tr>
+            <tr><td><code>ver</code></td><td>4</td><td>Version, always <code>0111</code></td></tr>
+            <tr><td><code>rand_a</code></td><td>12</td><td>Random, or a counter for ordering inside one millisecond</td></tr>
+            <tr><td><code>var</code></td><td>2</td><td>Variant, always <code>10</code></td></tr>
+            <tr><td><code>rand_b</code></td><td>62</td><td>Random</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>This generator uses <code>rand_a</code> as a counter, which RFC 9562 permits. That means a batch of ten thousand generated in the same millisecond comes out strictly ascending rather than shuffled within each millisecond — the property you actually wanted when you chose v7. If the counter saturates, the timestamp borrows from the next millisecond rather than repeating a value.</p>
+
+      <h2>A UUID is not a secret</h2>
+      <p>This catches people out, and the two versions differ:</p>
+      <ul>
+        <li><strong>v4</strong> from a cryptographic RNG carries 122 unpredictable bits. Using one as an unguessable link token is defensible.</li>
+        <li><strong>v7</strong> carries 74 random bits alongside a timestamp anyone can read. If an attacker knows roughly when a record was created, the search space is far smaller than the length of the string suggests. Do not use v7 as a capability token, a password reset link, or a session identifier.</li>
+      </ul>
+      <p>For anything that must be unguessable, generate a dedicated random token rather than reusing an identifier that also has to be a database key.</p>
+
+      <h2>Collisions</h2>
+      <p>For v4, the probability of a duplicate reaches roughly one in a billion only after about 10<sup>15</sup> UUIDs. In practice the risk is not the mathematics but the source of randomness: a UUID built on <code>Math.random</code>, or on a seeded RNG in a test harness, collides readily. This tool uses <code>crypto.getRandomValues</code>. If you are generating UUIDs in your own code, check what your library is actually calling.</p>
+
+      <h2>Common questions</h2>
+      <dl class="faq">
+        <dt>Are these uploaded anywhere?</dt>
+        <dd>No. Generation happens in your browser and the page makes no network requests. See the <a href="../privacy.html">privacy policy</a>.</dd>
+
+        <dt>Why is my v7 batch not sorted when I check it?</dt>
+        <dd>It should be. If it is not, you are probably comparing formatted output after ticking "No hyphens" against unformatted values, or sorting as text with mixed case. Uppercase and lowercase hex sort differently.</dd>
+
+        <dt>Can I get the timestamp back out of a v7?</dt>
+        <dd>Yes — the first twelve hex characters are the millisecond timestamp. Parse them as a base-16 integer and pass the result to your date constructor.</dd>
+
+        <dt>What about v1?</dt>
+        <dd>v1 embeds a MAC address and a 100-nanosecond clock. It leaks hardware identity and its ordering guarantees are weaker than v7's. There is no good reason to choose it for new work.</dd>
+
+        <dt>Should I store UUIDs as text?</dt>
+        <dd>Only if you have to. A UUID is 16 bytes; stored as a 36-character string it is more than twice the size, and every index comparison is a string comparison. Postgres has a native <code>uuid</code> type and MySQL can use <code>BINARY(16)</code>.</dd>
+      </dl>
+
+      <ul class="card-links">
+        <li><a href="../password/index.html"><strong>Password generator</strong><span>Strong random passwords with the exact entropy shown.</span></a></li>
+        <li><a href="../imei/index.html"><strong>IMEI generator</strong><span>Luhn-valid test numbers for device fixtures.</span></a></li>
+      </ul>
+
+    </div>
+
+    <!-- Ad slot: paste your AdSense unit here. -->
+    <div class="ad-slot" id="ad-bottom"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="../index.html">All tools</a>
+      <a href="../about.html">About</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+<script src="../assets/base.js" defer></script>
+<script src="tool.js" defer></script>
+</body>
+</html>

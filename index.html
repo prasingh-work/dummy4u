@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>dummy4u — Small Browser Tools for Developers</title>
+<meta name="description" content="Fast, single-purpose tools for developers and QA engineers. Generate test IMEI numbers, validate checksums, and more — everything runs in your browser, nothing is uploaded." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="assets/style.css" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="dummy4u — Small Browser Tools for Developers" />
+<meta property="og:description" content="Fast, single-purpose tools for developers and QA engineers. Everything runs in your browser." />
+<meta property="og:url" content="https://dummy4u.com/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "dummy4u",
+  "url": "https://dummy4u.com/",
+  "description": "Small, single-purpose browser tools for developers and QA engineers."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Tools",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Password Generator", "url": "https://dummy4u.com/password/" },
+    { "@type": "ListItem", "position": 2, "name": "UUID Generator", "url": "https://dummy4u.com/uuid/" },
+    { "@type": "ListItem", "position": 3, "name": "IMEI Generator", "url": "https://dummy4u.com/imei/" },
+    { "@type": "ListItem", "position": 4, "name": "Test Card Number Generator", "url": "https://dummy4u.com/test-card-numbers/" },
+    { "@type": "ListItem", "position": 5, "name": "IMEI Validator", "url": "https://dummy4u.com/imei/validator.html" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tools">Skip to the tools</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="index.html" aria-current="page">All tools</a>
+      <a href="password/index.html">Password</a>
+      <a href="uuid/index.html">UUID</a>
+      <a href="test-card-numbers/index.html">Test cards</a>
+      <a href="imei/index.html">IMEI</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="hero">
+      <h1>Small tools that do one thing</h1>
+      <p class="tagline">Test data and quick checks for people who build software. No sign-up, no upload, no waiting.</p>
+    </div>
+
+    <h2 class="section-label" id="tools">Tools</h2>
+    <ul class="card-links">
+      <li><a href="password/index.html"><strong>Password generator</strong><span>Strong random passwords with the exact entropy shown. Nothing stored.</span></a></li>
+      <li><a href="uuid/index.html"><strong>UUID generator</strong><span>Random v4 or time-ordered v7 per RFC 9562, with CSV export.</span></a></li>
+      <li><a href="test-card-numbers/index.html"><strong>Test card numbers</strong><span>Luhn-valid card numbers for payment form testing. Unissued and unchargeable.</span></a></li>
+      <li><a href="imei/index.html"><strong>IMEI generator</strong><span>Luhn-valid 15-digit test numbers. One, or up to 100,000 with CSV export.</span></a></li>
+      <li><a href="imei/validator.html"><strong>IMEI validator</strong><span>Check a checksum and see the TAC, serial and check digit broken out.</span></a></li>
+      <li><a href="imei/imei-format-guide.html"><strong>IMEI format guide</strong><span>The 15-digit structure and the Luhn algorithm, with working code.</span></a></li>
+    </ul>
+
+    <!-- Ad slot: paste your AdSense unit here. Kept below the tool list. -->
+    <div class="ad-slot" id="ad-top"></div>
+
+    <div class="prose">
+
+      <h2>How these tools work</h2>
+      <p>Every tool here runs as JavaScript inside your browser. There is no backend that processes what you type, because there is no backend at all — the pages are static files served from a CDN. Whatever you generate or paste stays on your machine, and closing the tab is all it takes to be rid of it.</p>
+      <p>That architecture is a deliberate constraint rather than a shortcut. A tool that never receives your data cannot leak it, cannot be subpoenaed for it, and cannot quietly start logging it after an acquisition. When a page here says nothing is uploaded, you can confirm it yourself by opening your browser's network tab and watching for requests that never arrive.</p>
+
+      <h2>Why they are small</h2>
+      <p>A page here is typically under 15 KB compressed, loads in three requests, and works offline once it has loaded. There is no framework, no icon library, no web font, and no analytics script. The tool appears at the top of the page and works on the first click, without an interstitial, a cookie wall you have to fight, or four paragraphs of preamble before the button.</p>
+      <p>The reason is straightforward: most people arrive at a tool like this from a search result, in the middle of doing something else. They want one number, or one answer, and then they want to get back to work. A page that takes four seconds to become interactive has already failed at that, however good it looks once it settles.</p>
+
+      <h2>Who they are for</h2>
+      <ul>
+        <li><strong>Developers</strong> building or testing anything that stores identifiers, who need realistic values that belong to nobody.</li>
+        <li><strong>QA engineers</strong> filling fixtures, seeding staging environments, and probing validation logic with edge cases.</li>
+        <li><strong>Support and operations staff</strong> who need to check whether a number a customer read out over the phone is even well formed before escalating.</li>
+      </ul>
+      <p>The writing on each tool assumes you already know your domain. There is background material on every page for the times you want it, but it sits below the tool, never in front of it.</p>
+
+      <h2>What we do not do</h2>
+      <p>We do not collect what you type, run analytics, set tracking cookies of our own, or ask for an email address. The only third party involved is the advertising that keeps the site free, and what that entails is set out plainly in the <a href="privacy.html">privacy policy</a> rather than buried.</p>
+      <p>We also do not build tools whose purpose is deception. The test data generated here is structurally valid so that your validation code behaves realistically — it is not registered to anything, it will not pass a lookup against a real registry, and presenting it as genuine is prohibited by the <a href="terms.html">terms of use</a>. That line is drawn deliberately, and it decides what gets built here and what does not.</p>
+
+      <h2>New tools</h2>
+      <p>Tools are added occasionally, when there is something worth adding and something worth writing about it. Each one gets the same treatment as the first: it runs in your browser, it loads fast, and it comes with a proper explanation for the people who want one. If there is something you keep needing and cannot find a decent version of, the <a href="contact.html">contact page</a> is the place to say so.</p>
+
+    </div>
+
+    <!-- Ad slot: paste your AdSense unit here. -->
+    <div class="ad-slot" id="ad-bottom"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="index.html">All tools</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+</body>
+</html>

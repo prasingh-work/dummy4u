@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>About — IMEI Generator</title>
+<meta name="description" content="Who runs this IMEI generator, why it exists, and how it works: a browser-only test-data tool for developers and QA engineers." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/about.html" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="assets/style.css" />
+<meta name="robots" content="index, follow" />
+</head>
+<body>
+
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="index.html">All tools</a>
+      <a href="imei/index.html">IMEI generator</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hero"><h1>About this site</h1></div>
+    <div class="prose" id="content">
+      <h2>What this site is</h2>
+      <p>A small collection of single-purpose tools for people who build and test software: a password generator, a UUID generator, a test card number generator, and a generator and validator for IMEI numbers. Every one of them runs entirely in your browser. There is no account, no upload, and no server-side processing of anything you type or generate.</p>
+
+      <h2>Why it exists</h2>
+      <p>Anyone building or testing software that stores identifiers hits the same wall early: you need realistic values, and the realistic values you have to hand are real ones belonging to real people and real devices. Copying those into a fixture file, a seeded database, or a bug report is a privacy problem that is easy to create and awkward to reverse. The same instinct applies to secrets — a password you generate should be produced where nobody else can see it.</p>
+      <p>Most existing generators solve that but bury the tool under an interstitial, three ad units, and four hundred words of throat-clearing before the button. Every page here puts the tool at the top, returns a result in a single click, and keeps the explanatory material below it for the people who want it. A page is a shared stylesheet and two small scripts, with no framework, no tracker, and no fonts fetched from anywhere. Each tool ships only its own logic, so opening one never downloads the code for the others.</p>
+
+      <h2>How it works</h2>
+      <p>Randomness comes from your browser's cryptographic generator, <code>crypto.getRandomValues</code>, never <code>Math.random</code>, with rejection sampling so that no value is favoured over another. Where a format has structure — a Luhn checksum on an IMEI, the version and variant bits of a UUID — it is computed correctly rather than approximated. The <a href="imei/imei-format-guide.html">IMEI format guide</a> sets out one of those algorithms in full, with code you can check against.</p>
+      <p>Bulk generation is done in a single pass with a pooled random buffer; a hundred thousand values take a few tens of milliseconds and the page reports the actual figure each time, so you can see for yourself that nothing is being fetched.</p>
+
+      <h2>What we will not build</h2>
+      <p>We do not generate IMEIs targeted at a specific manufacturer's allocated TAC range, we do not generate expiry dates or security codes alongside card numbers, and we do not offer blocklist lookups, unlocking, BIN lookups, or anything that would help pass a fabricated number off as real. Those uses are outside what this site is for, and several of them are criminal offences. Test data is test data; where a tool produces a secret instead, as the password generator does, it stays on your machine and we keep no copy.</p>
+
+      <h2>Corrections</h2>
+      <p>If something on this site is technically wrong, we would rather know. The <a href="contact.html">contact page</a> has an address, and corrections are made promptly.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="index.html">All tools</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+</body>
+</html>

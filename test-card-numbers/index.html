@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Test Card Number Generator — Luhn-Valid Numbers</title>
+<meta name="description" content="Generate Luhn-valid test credit card numbers for Visa, Mastercard, Amex, Discover, JCB and Diners Club. For testing payment forms and validation logic. Not real accounts; cannot be charged." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/test-card-numbers/" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="Test Card Number Generator — Luhn-Valid Numbers" />
+<meta property="og:description" content="Luhn-valid test card numbers for payment form and validation testing. Not real accounts; cannot be charged." />
+<meta property="og:url" content="https://dummy4u.com/test-card-numbers/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Test Card Number Generator",
+  "url": "https://dummy4u.com/test-card-numbers/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Generates Luhn-valid card numbers with correct brand structure for testing payment forms and validation logic. Numbers are random, unissued, and cannot be charged.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "All tools", "item": "https://dummy4u.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Test Card Number Generator", "item": "https://dummy4u.com/test-card-numbers/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tool">Skip to the generator</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="../index.html">All tools</a>
+      <a href="index.html" aria-current="page">Test cards</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All tools</a> <span aria-hidden="true">&rsaquo;</span> Test card numbers</nav>
+    <div class="hero">
+      <h1>Test Card Number Generator</h1>
+      <p class="tagline">Luhn-valid numbers with correct brand structure, for testing payment forms. Not issued to anyone and impossible to charge.</p>
+    </div>
+
+    <section class="card" id="tool" aria-label="Test card number generator">
+      <form id="gen-form">
+        <div class="row">
+          <div class="field">
+            <label class="label" for="brand">Brand</label>
+            <select id="brand">
+              <option value="visa" selected>Visa</option>
+              <option value="mastercard">Mastercard</option>
+              <option value="amex">American Express</option>
+              <option value="discover">Discover</option>
+              <option value="jcb">JCB</option>
+              <option value="diners">Diners Club</option>
+              <option value="any">Any brand</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label" for="count">How many</label>
+            <input id="count" type="number" value="1" min="1" max="5000" step="1" inputmode="numeric" autocomplete="off" />
+          </div>
+          <button class="primary" id="generate" type="submit">Generate</button>
+        </div>
+
+        <fieldset class="opts">
+          <legend class="label">Format</legend>
+          <label><input type="checkbox" id="spaced" /> Group in fours</label>
+        </fieldset>
+      </form>
+
+      <div class="result">
+        <span class="label" id="out-label">Result</span>
+        <output id="single" role="button" tabindex="0" aria-labelledby="out-label" title="Click to copy">&mdash;</output>
+        <div id="list" role="button" tabindex="0" aria-labelledby="out-label" title="Click to copy all" hidden><pre id="list-text"></pre></div>
+        <p class="truncated" id="truncated" hidden></p>
+      </div>
+
+      <div class="actions">
+        <button class="secondary" id="copy" type="button">Copy</button>
+        <button class="secondary" id="download" type="button" hidden>Download CSV</button>
+      </div>
+
+      <p class="status" id="gen-status" role="status" aria-live="polite"></p>
+      <p class="meta-line">Random, unissued numbers. They will be declined by any real payment processor.</p>
+    </section>
+
+    <!-- Ad slot: paste your AdSense unit here. Kept below the tool on purpose. -->
+    <div class="ad-slot" id="ad-top"></div>
+
+    <div class="prose">
+
+      <h2>Use the processor's own test numbers first</h2>
+      <p>If you are testing against a payment gateway in sandbox mode, the numbers below are almost certainly what you want. Every major processor publishes a fixed set that its test environment recognises and approves, and they trigger the success path deterministically. Generated numbers cannot do that, because a gateway has no way to know they were meant to be test data.</p>
+
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Brand</th><th class="mono">Number</th><th>Digits</th></tr></thead>
+          <tbody>
+            <tr><td>Visa</td><td class="mono">4242 4242 4242 4242</td><td>16</td></tr>
+            <tr><td>Mastercard</td><td class="mono">5555 5555 5555 4444</td><td>16</td></tr>
+            <tr><td>American Express</td><td class="mono">3782 822463 10005</td><td>15</td></tr>
+            <tr><td>Discover</td><td class="mono">6011 1111 1111 1117</td><td>16</td></tr>
+            <tr><td>JCB</td><td class="mono">3566 0020 2036 0505</td><td>16</td></tr>
+            <tr><td>Diners Club</td><td class="mono">3056 9300 0902 0004</td><td>14</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">These are Stripe's published test numbers and are widely recognised by other sandboxes too. Check your own processor's documentation, since each publishes its own list along with numbers that deliberately trigger declines, expiries and fraud blocks — those failure-path numbers are usually the more valuable half.</p>
+
+      <h2>So what is the generator for</h2>
+      <p>Volume and variety, in the parts of your system that never talk to a gateway:</p>
+      <ul>
+        <li>Exercising client-side validation — does the form detect the brand, apply the right length, and reject a bad checksum?</li>
+        <li>Seeding a database or a fixture file with realistic-looking values that belong to nobody.</li>
+        <li>Load-testing an endpoint with unique inputs that survive format validation.</li>
+        <li>Checking that your logging and error reporting mask card numbers properly — easier to verify when the number in the log is a fake one.</li>
+      </ul>
+
+      <h2>Expiry and CVC</h2>
+      <p>This tool does not generate them, and that is deliberate. There is nothing to compute: a sandbox accepts <strong>any future expiry date</strong> and <strong>any three digits</strong> as the CVC — four for American Express. A generated three-digit number would carry no more meaning than one you typed yourself, and a full set of card details laid out together looks like something other than a testing tool.</p>
+
+      <h2>How a card number is put together</h2>
+      <p>The structure is defined by ISO/IEC 7812 and is the same across brands:</p>
+      <ul>
+        <li>The <strong>Issuer Identification Number</strong> — the first six or eight digits, commonly called the BIN — identifies the network and the issuing institution. This is what tells a form whether you have typed a Visa or an Amex, usually from the first one or two digits alone.</li>
+        <li>The <strong>individual account identifier</strong> fills the middle and is assigned by the issuer.</li>
+        <li>The <strong>check digit</strong> at the end is a Luhn checksum over everything before it, exactly as on an <a href="../imei/index.html">IMEI</a>.</li>
+      </ul>
+
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Brand</th><th>Starts with</th><th>Length</th></tr></thead>
+          <tbody>
+            <tr><td>Visa</td><td class="mono">4</td><td>16</td></tr>
+            <tr><td>Mastercard</td><td class="mono">51–55, 2221–2720</td><td>16</td></tr>
+            <tr><td>American Express</td><td class="mono">34, 37</td><td>15</td></tr>
+            <tr><td>Discover</td><td class="mono">6011, 65, 644–649</td><td>16</td></tr>
+            <tr><td>JCB</td><td class="mono">3528–3589</td><td>16</td></tr>
+            <tr><td>Diners Club</td><td class="mono">36, 38–39, 300–305</td><td>14</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The generator picks a prefix from these ranges, fills the middle with digits from <code>crypto.getRandomValues</code>, and appends a correctly computed check digit. That is the entire process — there is no database of numbers behind it.</p>
+
+      <h2>What these numbers are not</h2>
+      <p>A passing Luhn check means the digits are internally consistent. It says nothing about whether an account exists, and the arithmetic is public — it was designed in the 1950s to catch transcription errors over the telephone, not to prove anything.</p>
+      <ul>
+        <li><strong>They are not issued.</strong> No bank has allocated them, no account sits behind them, and no money can move.</li>
+        <li><strong>They will be declined.</strong> A real processor performs an authorisation against the issuer. There is no issuer here to answer.</li>
+        <li><strong>They will not pass a sandbox's success path</strong> either, unless the sandbox only checks the format. Use the published numbers above for that.</li>
+        <li><strong>They are not a way around anything.</strong> Using a generated number to open an account, claim a trial, or present as a means of payment is fraud, is prohibited by the <a href="../terms.html">terms of use</a>, and does not work — the authorisation fails.</li>
+      </ul>
+
+      <h2>The reason this tool exists</h2>
+      <p>It is not that fake card numbers are interesting. It is that the alternative is worse. The path of least resistance for a developer who needs a card number in a test environment is to use their own, or one from a support ticket, and a real number in a non-production system is a genuine compliance problem: it drags that environment into PCI DSS scope, it ends up in fixtures and logs and screenshots, and it is nearly impossible to extract afterwards. A number that belongs to nobody removes that temptation entirely.</p>
+
+      <h2>Common questions</h2>
+      <dl class="faq">
+        <dt>Is anything sent to a server?</dt>
+        <dd>No. Generation happens in your browser and the page makes no network requests. See the <a href="../privacy.html">privacy policy</a>.</dd>
+
+        <dt>Could a generated number match a real one by chance?</dt>
+        <dd>In principle a randomly generated number can coincide with an issued one, which is why it is worthless as anything but test data — it carries no name, no expiry, no CVC, and no authorisation will succeed against it. Treat any match as coincidence and use the published test numbers for anything touching a gateway.</dd>
+
+        <dt>Why is there no RuPay or UnionPay option?</dt>
+        <dd>Their IIN allocations are not published in a form we can verify, and inventing ranges would produce numbers that fail brand detection — worse than useless for testing. The six brands here have well-documented ranges.</dd>
+
+        <dt>Does my validator have a bug if it rejects these?</dt>
+        <dd>Possibly not. Some validators check the checksum and the brand prefix; others additionally query a BIN database, and a random BIN will not be found there. That is correct behaviour on their part.</dd>
+      </dl>
+
+      <ul class="card-links">
+        <li><a href="../uuid/index.html"><strong>UUID generator</strong><span>v4 and time-ordered v7, with CSV export.</span></a></li>
+        <li><a href="../imei/index.html"><strong>IMEI generator</strong><span>Luhn-valid device identifiers for test fixtures.</span></a></li>
+      </ul>
+
+    </div>
+
+    <!-- Ad slot: paste your AdSense unit here. -->
+    <div class="ad-slot" id="ad-bottom"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="../index.html">All tools</a>
+      <a href="../about.html">About</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+<script src="../assets/base.js" defer></script>
+<script src="tool.js" defer></script>
+</body>
+</html>

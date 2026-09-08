@@ -1,0 +1,5 @@
+# Serve from the domain root: https://dummy4u.com/robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://dummy4u.com/sitemap.xml

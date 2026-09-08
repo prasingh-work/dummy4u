@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Password Generator — Strong Random Passwords</title>
+<meta name="description" content="Generate strong random passwords in your browser. Choose length and character types, see the exact entropy, copy in one click. Nothing is sent anywhere or stored." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/password/" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="Password Generator — Strong Random Passwords" />
+<meta property="og:description" content="Generate strong random passwords in your browser, with the exact entropy shown. Nothing is uploaded." />
+<meta property="og:url" content="https://dummy4u.com/password/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Password Generator",
+  "url": "https://dummy4u.com/password/",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Generates strong random passwords in the browser using the Web Crypto API, with the exact entropy of each result shown.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "All tools", "item": "https://dummy4u.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Password Generator", "item": "https://dummy4u.com/password/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tool">Skip to the generator</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="../index.html">All tools</a>
+      <a href="index.html" aria-current="page">Password</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All tools</a> <span aria-hidden="true">&rsaquo;</span> Password generator</nav>
+    <div class="hero">
+      <h1>Password Generator</h1>
+      <p class="tagline">Strong random passwords, generated in your browser. Never transmitted, never stored.</p>
+    </div>
+
+    <section class="card" id="tool" aria-label="Password generator">
+      <form id="gen-form">
+        <div class="row">
+          <div class="field">
+            <label class="label" for="length">Length</label>
+            <input id="length" type="number" value="20" min="4" max="128" step="1" inputmode="numeric" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label class="label" for="count">How many</label>
+            <input id="count" type="number" value="1" min="1" max="500" step="1" inputmode="numeric" autocomplete="off" />
+          </div>
+          <button class="primary" id="generate" type="submit">Generate</button>
+        </div>
+
+        <fieldset class="opts">
+          <legend class="label">Include</legend>
+          <label><input type="checkbox" id="set-lower" checked /> a-z</label>
+          <label><input type="checkbox" id="set-upper" checked /> A-Z</label>
+          <label><input type="checkbox" id="set-digit" checked /> 0-9</label>
+          <label><input type="checkbox" id="set-symbol" checked /> Symbols</label>
+          <label><input type="checkbox" id="no-lookalike" /> Avoid look-alikes</label>
+        </fieldset>
+      </form>
+
+      <div class="result">
+        <span class="label" id="out-label">Password</span>
+        <output id="single" role="button" tabindex="0" aria-labelledby="out-label" title="Click to copy">&mdash;</output>
+        <div id="list" role="button" tabindex="0" aria-labelledby="out-label" title="Click to copy all" hidden><pre id="list-text"></pre></div>
+      </div>
+
+      <p class="meta-line" id="entropy"></p>
+
+      <div class="actions">
+        <button class="secondary" id="copy" type="button">Copy</button>
+      </div>
+
+      <p class="status" id="gen-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- Ad slot: paste your AdSense unit here. Kept below the tool on purpose. -->
+    <div class="ad-slot" id="ad-top"></div>
+
+    <div class="prose">
+
+      <h2>What "strong" actually measures</h2>
+      <p>Strength is entropy — how many equally likely passwords an attacker would have to work through — and it comes from two numbers only: the size of the alphabet and the length. Each character drawn from an 82-character set contributes about 6.4 bits, so a 20-character password is worth roughly 127 bits. The figure under the output box is that calculation, not a colour-coded guess.</p>
+      <p>This is why the usual advice is upside down. Adding a symbol to an 8-character password buys you a few bits. Adding four more characters buys you twenty-five. Length is the lever.</p>
+
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Length</th><th>Lower + digits (36)</th><th>Mixed case + digits (62)</th><th>All four sets (82)</th></tr></thead>
+          <tbody>
+            <tr><td>8</td><td>41 bits</td><td>47 bits</td><td>50 bits</td></tr>
+            <tr><td>12</td><td>62 bits</td><td>71 bits</td><td>76 bits</td></tr>
+            <tr><td>16</td><td>82 bits</td><td>95 bits</td><td>101 bits</td></tr>
+            <tr><td>20</td><td>103 bits</td><td>119 bits</td><td>127 bits</td></tr>
+            <tr><td>32</td><td>165 bits</td><td>190 bits</td><td>203 bits</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Anything at or above about 80 bits is beyond offline brute force with current hardware. The default here is 20 characters with all four sets, which is comfortably past that and still short enough to type out when you have to.</p>
+
+      <h2>What the current guidance says</h2>
+      <p>NIST finalised revision 4 of its digital identity guidelines (SP 800-63B-4) on 31 July 2025, and it is blunter than most corporate password policies:</p>
+      <ul>
+        <li>Passwords used as a single authentication factor <strong>shall be at least 15 characters</strong>.</li>
+        <li>Composition rules — "must contain one uppercase, one digit, one symbol" — <strong>shall not be imposed</strong>. They push people toward predictable substitutions without adding meaningful entropy.</li>
+        <li>Verifiers <strong>shall not require periodic password changes</strong>. Force a change only on evidence of compromise.</li>
+      </ul>
+      <p>The generator still guarantees one character from each set you tick, because plenty of sites have not read the guidance and will reject a password without a digit. That guarantee costs a fraction of a bit at these lengths; the entropy shown is the uniform-draw figure.</p>
+
+      <h2>Options worth understanding</h2>
+      <p><strong>Avoid look-alikes</strong> removes <code>I l 1 | O 0 o</code>. Use it for anything that will be read aloud, copied off a screen, or typed from a printed sheet. It shrinks the alphabet, and the entropy figure updates to match — no hidden cost.</p>
+      <p><strong>Symbols</strong> here exclude quotes, backslashes, backticks, commas and spaces. Those are the characters that break shell commands, CSV imports, connection strings and older web forms. What remains is safe to paste almost anywhere.</p>
+
+      <h2>Why there is no download button</h2>
+      <p>The IMEI and UUID tools on this site let you export a batch as CSV. This one deliberately does not. A file of plaintext passwords on your disk is a liability that outlives its usefulness, ends up in a backup, and gets shared over chat when someone needs one of them. Generate into a password manager, one at a time, and let it hold the secret. Bulk generation is here for provisioning scripts and test accounts, where the passwords are about to be consumed immediately.</p>
+      <p>Nothing you generate is transmitted anywhere — there is no server to receive it. Confirm it yourself: open your browser's network tab and watch the page make no requests at all while you click Generate.</p>
+
+      <h2>Common questions</h2>
+      <dl class="faq">
+        <dt>Where does the randomness come from?</dt>
+        <dd><code>crypto.getRandomValues</code>, your browser's cryptographically secure generator, never <code>Math.random</code>. Characters are chosen by rejection sampling, so every character in the alphabet is exactly equally likely.</dd>
+
+        <dt>Can the same password come up twice?</dt>
+        <dd>At 20 characters the space is around 2<sup>127</sup>. You will not see a repeat.</dd>
+
+        <dt>Is a passphrase better?</dt>
+        <dd>Only if it is long. Four common words is roughly 44 bits — weaker than what this tool produces by default. Passphrases win on memorability, which matters for the handful of passwords you actually have to remember; for everything else, a manager and a random string is stronger.</dd>
+
+        <dt>Should I change my passwords every 90 days?</dt>
+        <dd>No, and NIST explicitly advises against requiring it. Rotation drives people toward predictable increments. Change a password when there is reason to think it leaked.</dd>
+      </dl>
+
+      <ul class="card-links">
+        <li><a href="../uuid/index.html"><strong>UUID generator</strong><span>v4 and time-ordered v7, with CSV export.</span></a></li>
+        <li><a href="../imei/index.html"><strong>IMEI generator</strong><span>Luhn-valid test numbers for device fixtures.</span></a></li>
+      </ul>
+
+    </div>
+
+    <!-- Ad slot: paste your AdSense unit here. -->
+    <div class="ad-slot" id="ad-bottom"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="../index.html">All tools</a>
+      <a href="../about.html">About</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+<script src="../assets/base.js" defer></script>
+<script src="tool.js" defer></script>
+</body>
+</html>

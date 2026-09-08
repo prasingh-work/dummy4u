@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>IMEI Validator — Check an IMEI Checksum</title>
+<meta name="description" content="Paste a 15-digit IMEI and check its Luhn checksum instantly. Shows the TAC, serial number, and check digit broken out. Runs in your browser; nothing is uploaded." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/imei/validator.html" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="IMEI Validator — Check an IMEI Checksum" />
+<meta property="og:description" content="Paste a 15-digit IMEI and check its Luhn checksum instantly, with the TAC and serial broken out." />
+<meta property="og:url" content="https://dummy4u.com/imei/validator.html" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "IMEI Validator",
+  "url": "https://dummy4u.com/imei/validator.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Checks the Luhn checksum of a 15-digit IMEI and breaks it into TAC, serial number, and check digit. Runs entirely in the browser.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "IMEI Generator", "item": "https://dummy4u.com/imei/" },
+    { "@type": "ListItem", "position": 2, "name": "IMEI Validator", "item": "https://dummy4u.com/imei/validator.html" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tool">Skip to the validator</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="index.html">Generate</a>
+      <a href="validator.html" aria-current="page">Validate</a>
+      <a href="imei-format-guide.html">Format guide</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All tools</a> <span aria-hidden="true">&rsaquo;</span> IMEI validator</nav>
+    <div class="hero">
+      <h1>IMEI Validator</h1>
+      <p class="tagline">Paste a number. Get the checksum verdict and the parts it breaks into.</p>
+    </div>
+
+    <section class="card" id="tool" aria-label="IMEI validator">
+      <form id="check-form">
+        <label class="label" for="imei-input">IMEI</label>
+        <input id="imei-input" type="text" inputmode="numeric" autocomplete="off" spellcheck="false"
+               placeholder="354915038472669" maxlength="32" />
+        <div class="actions">
+          <button class="primary" id="check" type="submit">Check</button>
+          <button class="secondary" id="paste" type="button">Paste</button>
+        </div>
+      </form>
+
+      <div class="verdict" id="verdict" hidden>
+        <p class="verdict-head"><span id="verdict-headline"></span></p>
+        <p id="verdict-detail"></p>
+        <table class="parts" id="parts" hidden>
+          <tbody>
+            <tr><th scope="row">Reporting Body Identifier</th><td class="val" id="part-rbi"></td></tr>
+            <tr><th scope="row">Type Allocation Code</th><td class="val" id="part-tac"></td></tr>
+            <tr><th scope="row">Serial number</th><td class="val" id="part-serial"></td></tr>
+            <tr><th scope="row">Check digit</th><td class="val" id="part-check"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="status" id="check-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- Ad slot: paste your AdSense unit here. Kept below the tool on purpose. -->
+    <div class="ad-slot" id="ad-top"></div>
+
+    <div class="prose">
+
+      <h2>What the check actually proves</h2>
+      <p>A passing result means one thing: the fifteenth digit is the correct Luhn check digit for the first fourteen. That is a typo detector, not an identity check. It catches every single-digit error and almost every transposition of adjacent digits, which is what it was designed for in an era of numbers read aloud over the phone.</p>
+      <p>It tells you nothing about whether a device with that IMEI exists, who made it, or whether it is stolen. Those questions are answered by the GSMA's TAC database and by carrier Equipment Identity Registers, neither of which is reachable from a web page.</p>
+
+      <h2>Why a number you know is real might fail</h2>
+      <ul>
+        <li><strong>A digit was mistyped or transposed.</strong> By far the most common cause, and precisely what the checksum exists to catch.</li>
+        <li><strong>You have 16 digits, not 15.</strong> That is an IMEISV: the check digit is replaced by a two-digit software version number, so there is no checksum to verify.</li>
+        <li><strong>You have 14 digits.</strong> Some systems store or display the IMEI without its check digit. The number is not wrong, just incomplete.</li>
+        <li><strong>It is an MEID or ESN.</strong> CDMA devices use a 14-digit hexadecimal MEID or an 8-digit hex ESN. Different scheme, different rules.</li>
+        <li><strong>An OCR or barcode scan dropped a digit.</strong> Worth re-reading the label by eye before assuming the device is suspect.</li>
+      </ul>
+      <p>Dashes, spaces, and slashes are stripped before checking, so you can paste a number in any format you find it in.</p>
+
+      <h2>Validating in bulk, in your own code</h2>
+      <p>If you are checking more than a handful, do it where your data lives rather than pasting them one at a time. The whole algorithm is a dozen lines:</p>
+      <pre><code>def valid_imei(imei: str) -&gt; bool:
+    digits = [int(c) for c in imei if c.isdigit()]
+    if len(digits) != 15:
+        return False
+    total = 0
+    for i, d in enumerate(reversed(digits)):
+        if i % 2 == 1:          # every second digit from the right
+            d *= 2
+            if d &gt; 9:
+                d -= 9
+        total += d
+    return total % 10 == 0</code></pre>
+      <p>The <a href="imei-format-guide.html">format guide</a> has the same routine in JavaScript, along with the version that computes a check digit rather than verifying one.</p>
+
+      <h2>Common questions</h2>
+      <dl class="faq">
+        <dt>Is my IMEI uploaded anywhere?</dt>
+        <dd>No. The check runs in your browser and the number never leaves your device. There is no server-side component to receive it. Details are in the <a href="../privacy.html">privacy policy</a>.</dd>
+
+        <dt>Can I check whether a phone is stolen or blacklisted?</dt>
+        <dd>Not here. Blocklist status lives in the GSMA CEIR and in carrier registries; checking it requires an authorised lookup service, and in most countries your carrier or national regulator provides one free.</dd>
+
+        <dt>Can I look up the manufacturer and model?</dt>
+        <dd>Not from this page. The first eight digits — the TAC — do encode the model, but resolving them requires the GSMA's allocation database, which is licensed rather than public.</dd>
+
+        <dt>Do numbers from the generator pass this check?</dt>
+        <dd>Yes, by construction. The <a href="index.html">generator</a> computes a correct check digit for every number it produces.</dd>
+      </dl>
+
+    </div>
+
+    <!-- Ad slot: paste your AdSense unit here. -->
+    <div class="ad-slot" id="ad-bottom"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="../index.html">All tools</a>
+      <a href="../about.html">About</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+<script src="../assets/base.js" defer></script>
+<script src="tool.js" defer></script>
+</body>
+</html>

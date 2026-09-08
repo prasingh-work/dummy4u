@@ -1,0 +1,10 @@
+# Rename to ads.txt and deploy at the DOMAIN ROOT, i.e.
+# https://dummy4u.com/ads.txt — never inside a subfolder, where it is ignored.
+#
+# Deploy ONLY after AdSense approval, with your own publisher ID below. Find it
+# in AdSense under Account > Settings > Account information; it looks like
+# pub-1234567890123456.
+#
+# Do not deploy with the placeholder in place: an ads.txt that omits your real
+# publisher ID declares your inventory unauthorised to ad buyers.
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>IMEI Format Explained — TAC, Serial and Check Digit</title>
+<meta name="description" content="How the 15 digits of an IMEI are structured: reporting body, TAC, serial number and Luhn check digit — with a worked example and validation code in JavaScript and Python." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/imei/imei-format-guide.html" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="IMEI Format Explained — TAC, Serial and Check Digit" />
+<meta property="og:description" content="The 15-digit IMEI structure, the Luhn check digit with a worked example, IMEISV, and how IMEI differs from MEID and ESN." />
+<meta property="og:url" content="https://dummy4u.com/imei/imei-format-guide.html" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "IMEI Format Explained — TAC, Serial and Check Digit",
+  "description": "How the 15 digits of an IMEI are structured, how the Luhn check digit is calculated, and how IMEI differs from IMEISV, MEID and ESN.",
+  "url": "https://dummy4u.com/imei/imei-format-guide.html",
+  "datePublished": "2026-09-07",
+  "dateModified": "2026-09-07",
+  "inLanguage": "en",
+  "publisher": { "@type": "Organization", "name": "IMEI Generator", "url": "https://dummy4u.com/imei/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "IMEI Generator", "item": "https://dummy4u.com/imei/" },
+    { "@type": "ListItem", "position": 2, "name": "IMEI Format Guide", "item": "https://dummy4u.com/imei/imei-format-guide.html" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="index.html">Generate</a>
+      <a href="validator.html">Validate</a>
+      <a href="imei-format-guide.html" aria-current="page">Format guide</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All tools</a> <span aria-hidden="true">&rsaquo;</span> IMEI format guide</nav>
+    <div class="hero">
+      <h1>The IMEI format, in full</h1>
+      <p class="tagline">What each digit is for, how the checksum works, and where the neighbouring identifiers differ.</p>
+    </div>
+
+    <div class="prose" id="content">
+
+      <h2>Fifteen digits, four fields</h2>
+      <p>An IMEI is 15 decimal digits: a 14-digit body plus a check digit. Written out with separators it takes the form <code>AA-BBBBBB-CCCCCC-D</code>, which has been the standard layout since the format was revised in 2004.</p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Field</th><th>Digits</th><th class="mono">Example</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Reporting Body Identifier</td><td>2</td><td class="mono">35</td><td>The GSMA-approved body that allocated the TAC</td></tr>
+            <tr><td>Rest of the TAC</td><td>6</td><td class="mono">491503</td><td>Together with the RBI, identifies the device model</td></tr>
+            <tr><td>Serial number</td><td>6</td><td class="mono">847266</td><td>Assigned by the manufacturer within that model</td></tr>
+            <tr><td>Check digit</td><td>1</td><td class="mono">9</td><td>Luhn checksum over the preceding 14 digits</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The first eight digits together are the <strong>Type Allocation Code</strong>. Every handset of a given model shares a TAC; the six digits after it distinguish individual units. Six digits caps a single TAC at a million devices, which is why popular models hold several.</p>
+
+      <h3>The Reporting Body Identifier</h3>
+      <p>The leading two digits name the certification body that issued the TAC, assigned by the Global Decimal Administrator. Three you will see constantly:</p>
+      <ul>
+        <li><code>01</code> — PTCRB, covering North America</li>
+        <li><code>35</code> — BABT, covering the UK and Europe</li>
+        <li><code>86</code> — TAF, covering China</li>
+      </ul>
+      <p>Others exist for other regions and bodies. The RBI is the reason a random 15-digit number rarely looks convincing: real IMEIs cluster on a small set of leading pairs, so <a href="index.html">the generator</a> draws from that set rather than picking two digits at random.</p>
+
+      <h2>The check digit</h2>
+      <p>The last digit is a Luhn checksum, the same algorithm used on payment card numbers. It is deliberately simple, and it exists to catch human error rather than to prevent forgery — any single wrong digit, and nearly every transposition of two adjacent digits, changes the result.</p>
+
+      <h3>Calculating it</h3>
+      <ol>
+        <li>Take the 14-digit body.</li>
+        <li>Starting from the rightmost digit of that body, double every second digit — the 1st, 3rd, 5th and so on counting from the right.</li>
+        <li>If a doubled value exceeds 9, subtract 9 from it (equivalently, add its two digits together).</li>
+        <li>Sum every digit, doubled and untouched alike.</li>
+        <li>The check digit is whatever brings that sum up to the next multiple of ten.</li>
+      </ol>
+
+      <p>Worked through with <code>35491503847266</code>:</p>
+      <ul>
+        <li>Digits that get doubled, from the right: 6, 2, 4, 3, 5, 9, 5 → 3, 4, 8, 6, 1, 9, 1 → <strong>32</strong></li>
+        <li>Digits left alone: 6, 7, 8, 0, 1, 4, 3 → <strong>29</strong></li>
+        <li>Total <strong>61</strong>; the next multiple of ten is 70; the check digit is <strong>9</strong></li>
+      </ul>
+      <p>Giving <code>354915038472669</code>. To verify rather than compute, run the same doubling over all 15 digits — starting the doubling one position further left — and confirm the total is divisible by 10.</p>
+
+      <h3>In code</h3>
+      <pre><code>// Check digit for a 14-digit body.
+function checkDigit(body) {
+  let sum = 0;
+  for (let i = 0; i &lt; body.length; i++) {
+    let d = Number(body[body.length - 1 - i]);
+    if (i % 2 === 0) {              // every second digit from the right
+      d *= 2;
+      if (d &gt; 9) d -= 9;
+    }
+    sum += d;
+  }
+  return (10 - (sum % 10)) % 10;
+}
+
+// Validate a complete 15-digit IMEI.
+function isValid(imei) {
+  const digits = imei.replace(/\D/g, "");
+  if (digits.length !== 15) return false;
+  return String(checkDigit(digits.slice(0, 14))) === digits[14];
+}</code></pre>
+
+      <p class="note">Note the off-by-one that catches people out: when you validate all 15 digits you double the <em>even</em> positions from the right, because the check digit occupies the position that was odd when you computed it. Getting this backwards produces a routine that rejects every valid IMEI — <a href="validator.html">the validator</a> is a quick way to sanity-check your own implementation.</p>
+
+      <h2>IMEI, IMEISV, MEID and ESN</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Identifier</th><th>Length</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>IMEI</td><td>15 digits</td><td>14-digit body plus Luhn check digit</td></tr>
+            <tr><td>IMEISV</td><td>16 digits</td><td>Same 14-digit body, but the check digit is replaced by a two-digit software version number. No checksum</td></tr>
+            <tr><td>MEID</td><td>14 hex characters</td><td>CDMA equivalent; hexadecimal, so it can contain A–F</td></tr>
+            <tr><td>ESN</td><td>8 hex characters</td><td>The older CDMA identifier that MEID replaced</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>If a field in your system accepts "the device identifier", decide early which of these it means. A validator that assumes 15 decimal digits will reject every MEID it is handed, and a 16-digit IMEISV will fail a checksum test that was never applicable to it.</p>
+      <p>A dual-SIM handset carries two IMEIs, one per radio. Systems that assume one identifier per device tend to discover this late, usually in a support ticket.</p>
+
+      <h2>Where the IMEI is used</h2>
+      <p>Networks read the IMEI to identify the equipment itself, independently of the SIM. That separation is what makes it useful for blocking: report a handset stolen and the identifier can be added to an Equipment Identity Register, and onward to the GSMA's Central Equipment Identity Register, which participating carriers consult. A blocked handset stays blocked when the SIM is swapped, and increasingly when it crosses a border.</p>
+      <p>To read your own, dial <code>*#06#</code>. It is also printed on the SIM tray or the back of most devices, and shown under the device information screen in settings.</p>
+      <p>Changing the IMEI stored in a handset is a criminal offence in the United Kingdom under the Mobile Telephones (Re-programming) Act 2002, and is similarly prohibited in India, Australia and elsewhere. Generated numbers are for test data in software you control. They have no application to a physical device.</p>
+
+      <h2>Using generated IMEIs sensibly</h2>
+      <ul>
+        <li><strong>Keep them out of production.</strong> A fixture value that reaches a live device registry is a data-quality bug that is tedious to unpick later.</li>
+        <li><strong>Vary the TAC across your fixtures.</strong> If every test record shares one TAC you will never catch a grouping or partitioning bug.</li>
+        <li><strong>Test the invalid cases too.</strong> A 14-digit number, a 16-digit IMEISV, a letter in the middle, and a number one digit off from valid all belong in the suite.</li>
+        <li><strong>Do not treat validity as existence.</strong> If your product's behaviour depends on a device being real, checksum validation is not the check you need.</li>
+      </ul>
+
+      <ul class="card-links">
+        <li><a href="index.html"><strong>Generate test IMEIs</strong><span>One number or up to 100,000, with CSV export.</span></a></li>
+        <li><a href="validator.html"><strong>Validate an IMEI</strong><span>Checksum verdict plus the TAC and serial broken out.</span></a></li>
+      </ul>
+
+    </div>
+
+    <!-- Ad slot: paste your AdSense unit here. -->
+    <div class="ad-slot" id="ad-bottom"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="../index.html">All tools</a>
+      <a href="../about.html">About</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>IMEI Generator — Random Luhn-Valid Test Numbers</title>
+<meta name="description" content="Generate random, Luhn-valid 15-digit IMEI numbers for testing. One click for a single number, or thousands at once with CSV export. Free, instant, nothing stored." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/imei/" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="IMEI Generator — Random Luhn-Valid Test Numbers" />
+<meta property="og:description" content="Generate random, Luhn-valid 15-digit IMEI numbers for testing. Single or bulk, with CSV export." />
+<meta property="og:url" content="https://dummy4u.com/imei/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "IMEI Generator",
+  "url": "https://dummy4u.com/imei/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Generates random, Luhn-valid 15-digit IMEI numbers for software testing, singly or in bulk with CSV export. Runs entirely in the browser.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tool">Skip to the generator</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="index.html" aria-current="page">Generate</a>
+      <a href="validator.html">Validate</a>
+      <a href="imei-format-guide.html">Format guide</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All tools</a> <span aria-hidden="true">&rsaquo;</span> IMEI generator</nav>
+    <div class="hero">
+      <h1>Random IMEI Generator</h1>
+      <p class="tagline">Luhn-valid 15-digit numbers for test data. One, or a hundred thousand.</p>
+    </div>
+
+    <section class="card" id="tool" aria-label="IMEI generator">
+      <form class="row" id="gen-form">
+        <div class="field">
+          <label class="label" for="count">How many</label>
+          <input id="count" type="number" value="1" min="1" max="100000" step="1" inputmode="numeric" autocomplete="off" />
+        </div>
+        <button class="primary" id="generate" type="submit">Generate</button>
+      </form>
+
+      <div class="result">
+        <span class="label" id="out-label">Result</span>
+        <output id="single" role="button" tabindex="0" aria-labelledby="out-label" title="Click to copy">&mdash;</output>
+        <div id="list" role="button" tabindex="0" aria-labelledby="out-label" title="Click to copy all" hidden><pre id="list-text"></pre></div>
+        <p class="truncated" id="truncated" hidden></p>
+      </div>
+
+      <div class="actions">
+        <button class="secondary" id="copy" type="button">Copy</button>
+        <button class="secondary" id="download" type="button" hidden>Download CSV</button>
+      </div>
+
+      <p class="status" id="gen-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- Ad slot: paste your AdSense unit here. Kept below the tool on purpose. -->
+    <div class="ad-slot" id="ad-top"></div>
+
+    <div class="prose">
+
+      <h2>What this produces</h2>
+      <p>Every number is a syntactically correct IMEI: 15 digits whose final digit is the Luhn check digit of the first 14. It will pass the same format and checksum validation a real IMEI passes, which is the whole point when you are filling a test fixture or exercising an input field.</p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Segment</th><th>Digits</th><th class="mono">35-491503-847266-9</th><th>Where it comes from</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Reporting Body Identifier</td><td>2</td><td class="mono">35</td><td>Picked from the real RBI list, so the number looks plausible to a human reviewer</td></tr>
+            <tr><td>Rest of the TAC</td><td>6</td><td class="mono">491503</td><td>Random</td></tr>
+            <tr><td>Serial number</td><td>6</td><td class="mono">847266</td><td>Random</td></tr>
+            <tr><td>Check digit</td><td>1</td><td class="mono">9</td><td>Computed with the Luhn algorithm</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Digits come from <code>crypto.getRandomValues</code> rather than <code>Math.random</code>, with rejection sampling so no digit is more likely than another. Collisions within a batch are possible in principle and vanishingly rare in practice — there are 10<sup>12</sup> combinations behind each RBI.</p>
+
+      <h2>Why not just reuse a real IMEI</h2>
+      <p>Because an IMEI identifies a specific handset, which makes it personal data under the GDPR and similar regimes once it sits next to a user record. Real device identifiers have a way of leaking out of the environment they were captured in — into a seeded database, a fixture file committed to Git, a screenshot in a bug report, a log line shipped to a third-party aggregator.</p>
+      <p>Generated numbers remove that whole category of problem. They are structurally valid, so your validation logic behaves exactly as it would in production, and they belong to nobody, so nothing you do with them is a disclosure.</p>
+
+      <h2>Generating in bulk</h2>
+      <p>Set the count to anything up to 100,000. Above one number the output switches to a list and a <strong>Download CSV</strong> button appears. The file has an <code>index,imei</code> header and CRLF line endings, so it imports into Excel, Sheets, and <code>COPY FROM</code> in Postgres without any coaxing.</p>
+      <p>The on-screen list is capped at 300 rows for responsiveness; the CSV always contains the full batch. Typical uses:</p>
+      <ul>
+        <li>Seeding a device table with realistic-looking identifiers</li>
+        <li>Load-testing a lookup endpoint with unique keys that survive checksum validation</li>
+        <li>Building fixtures for a device-registration or warranty flow</li>
+        <li>Filling a staging environment without copying production data into it</li>
+      </ul>
+
+      <h2>What a generated IMEI cannot do</h2>
+      <p>This matters enough to be explicit about. A valid checksum is an arithmetic property, not an identity. These numbers are random, they are not registered anywhere, and they are useless for anything other than testing:</p>
+      <ul>
+        <li><strong>They will not unlock or unblock a phone.</strong> Carrier unlocking is tied to the device's real IMEI in the carrier's own systems.</li>
+        <li><strong>They will not clear a blacklist entry.</strong> Blocklisting happens in the GSMA's Central Equipment Identity Register and in carrier EIRs, both of which key on the genuine identifier.</li>
+        <li><strong>They will not return warranty or device details.</strong> A GSMA TAC lookup resolves the 8-digit TAC to a registered model; a random TAC resolves to nothing.</li>
+        <li><strong>They must not be written to a device.</strong> Altering a handset's IMEI is a criminal offence in the UK, India, and many other jurisdictions, regardless of intent.</li>
+      </ul>
+      <p>If you need your own device's IMEI, dial <code>*#06#</code> or look under Settings. This tool is for test data and nothing else.</p>
+
+      <h2>Common questions</h2>
+      <dl class="faq">
+        <dt>Are the numbers stored or sent anywhere?</dt>
+        <dd>No. All generation happens in your browser; there is no backend to send them to. Close the tab and they are gone. See the <a href="../privacy.html">privacy policy</a> for what the site as a whole does and does not collect.</dd>
+
+        <dt>Will these pass a validator?</dt>
+        <dd>Any checksum or format validator, yes — including our own <a href="validator.html">IMEI validator</a>. A validator that queries the GSMA TAC database will reject them, correctly, because the TAC is not an allocated one.</dd>
+
+        <dt>Can I generate an IMEI for a specific brand?</dt>
+        <dd>Not here, deliberately. Producing numbers that impersonate a real manufacturer's allocated TAC range makes them look like genuine devices, which is exactly the use we are not interested in supporting.</dd>
+
+        <dt>Why did my batch come back instantly?</dt>
+        <dd>Because it is only arithmetic. 100,000 numbers take a few tens of milliseconds; the status line reports the actual time. Nothing is fetched over the network.</dd>
+
+        <dt>Is 15 digits always right?</dt>
+        <dd>For an IMEI, yes. A 16-digit number is an IMEISV, where the check digit is replaced by a two-digit software version. The <a href="imei-format-guide.html">format guide</a> covers the difference.</dd>
+      </dl>
+
+      <h2>Related tools</h2>
+      <ul class="card-links">
+        <li><a href="validator.html"><strong>IMEI validator</strong><span>Check a number's checksum and see its TAC, serial, and check digit broken out.</span></a></li>
+        <li><a href="imei-format-guide.html"><strong>IMEI format guide</strong><span>The 15-digit structure, the Luhn algorithm with working code, and IMEISV.</span></a></li>
+      </ul>
+
+    </div>
+
+    <!-- Ad slot: paste your AdSense unit here. -->
+    <div class="ad-slot" id="ad-bottom"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="../index.html">All tools</a>
+      <a href="../about.html">About</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+<script src="../assets/base.js" defer></script>
+<script src="tool.js" defer></script>
+</body>
+</html>
