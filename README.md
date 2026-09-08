@@ -38,8 +38,7 @@ imei/tool.js
 ### Adding the next tool
 
 1. `mkdir <tool>` and copy `uuid/index.html` as the starting point — it has the
-   full head block, breadcrumb, ad slots and footer already wired at the right
-   depth.
+   full head block, breadcrumb and footer already wired.
 2. Write `<tool>/tool.js`. Use `T.randomBelow`, `T.copy`, `T.statusFor`,
    `T.toCsv`, `T.downloadText` and `T.clampInput` from `assets/base.js` rather
    than reimplementing them.
@@ -52,6 +51,18 @@ imei/tool.js
 are byte-identical everywhere, fetched once and cached for a year. Each
 `tool.js` holds only that tool's logic, so opening the password generator never
 downloads the IMEI code.
+
+### Link style
+
+Page links are root-absolute and clean: `/`, `/password/`, `/imei/`,
+`/imei/validator.html` — never `index.html`. They match the canonical URLs
+exactly, so there is no depth arithmetic when adding a tool and no redirect hop
+for visitors.
+
+Asset links stay **relative** (`../assets/style.css`) on purpose: that way a page
+opened straight from disk still renders with its styling. Page-to-page clicks
+will not work from `file://` — for local testing that needs navigation, run
+`python3 -m http.server 8000` and use `http://localhost:8000`.
 
 ### Page weight
 

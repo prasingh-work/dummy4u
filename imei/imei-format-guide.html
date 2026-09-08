@@ -45,11 +45,11 @@
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="../index.html">dummy4u</a>
+    <a class="brand" href="/">dummy4u</a>
     <nav aria-label="Primary">
-      <a href="index.html">Generate</a>
-      <a href="validator.html">Validate</a>
-      <a href="imei-format-guide.html" aria-current="page">Format guide</a>
+      <a href="/imei/">Generate</a>
+      <a href="/imei/validator.html">Validate</a>
+      <a href="/imei/imei-format-guide.html" aria-current="page">Format guide</a>
     </nav>
   </div>
 </header>
@@ -57,7 +57,7 @@
 <main>
   <div class="wrap">
 
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All tools</a> <span aria-hidden="true">&rsaquo;</span> IMEI format guide</nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">All tools</a> <span aria-hidden="true">&rsaquo;</span> IMEI format guide</nav>
     <div class="hero">
       <h1>The IMEI format, in full</h1>
       <p class="tagline">What each digit is for, how the checksum works, and where the neighbouring identifiers differ.</p>
@@ -91,7 +91,7 @@
         <li><code>35</code> — BABT, covering the UK and Europe</li>
         <li><code>86</code> — TAF, covering China</li>
       </ul>
-      <p>Others exist for other regions and bodies. The RBI is the reason a random 15-digit number rarely looks convincing: real IMEIs cluster on a small set of leading pairs, so <a href="index.html">the generator</a> draws from that set rather than picking two digits at random.</p>
+      <p>Others exist for other regions and bodies. The RBI is the reason a random 15-digit number rarely looks convincing: real IMEIs cluster on a small set of leading pairs, so <a href="/imei/">the generator</a> draws from that set rather than picking two digits at random.</p>
 
       <h2>The check digit</h2>
       <p>The last digit is a Luhn checksum, the same algorithm used on payment card numbers. It is deliberately simple, and it exists to catch human error rather than to prevent forgery — any single wrong digit, and nearly every transposition of two adjacent digits, changes the result.</p>
@@ -135,7 +135,7 @@ function isValid(imei) {
   return String(checkDigit(digits.slice(0, 14))) === digits[14];
 }</code></pre>
 
-      <p class="note">Note the off-by-one that catches people out: when you validate all 15 digits you double the <em>even</em> positions from the right, because the check digit occupies the position that was odd when you computed it. Getting this backwards produces a routine that rejects every valid IMEI — <a href="validator.html">the validator</a> is a quick way to sanity-check your own implementation.</p>
+      <p class="note">Note the off-by-one that catches people out: when you validate all 15 digits you double the <em>even</em> positions from the right, because the check digit occupies the position that was odd when you computed it. Getting this backwards produces a routine that rejects every valid IMEI — <a href="/imei/validator.html">the validator</a> is a quick way to sanity-check your own implementation.</p>
 
       <h2>IMEI, IMEISV, MEID and ESN</h2>
       <div class="table-scroll">
@@ -168,8 +168,8 @@ function isValid(imei) {
       </ul>
 
       <ul class="card-links">
-        <li><a href="index.html"><strong>Generate test IMEIs</strong><span>One number or up to 100,000, with CSV export.</span></a></li>
-        <li><a href="validator.html"><strong>Validate an IMEI</strong><span>Checksum verdict plus the TAC and serial broken out.</span></a></li>
+        <li><a href="/imei/"><strong>Generate test IMEIs</strong><span>One number or up to 100,000, with CSV export.</span></a></li>
+        <li><a href="/imei/validator.html"><strong>Validate an IMEI</strong><span>Checksum verdict plus the TAC and serial broken out.</span></a></li>
       </ul>
 
     </div>
@@ -181,11 +181,11 @@ function isValid(imei) {
 <footer class="site-footer">
   <div class="wrap">
     <nav aria-label="Footer">
-      <a href="../index.html">All tools</a>
-      <a href="../about.html">About</a>
-      <a href="../privacy.html">Privacy</a>
-      <a href="../terms.html">Terms</a>
-      <a href="../contact.html">Contact</a>
+      <a href="/">All tools</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/contact.html">Contact</a>
     </nav>
     <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
     <p>&copy; 2026 dummy4u</p>

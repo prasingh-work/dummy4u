@@ -17,10 +17,10 @@
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="index.html">dummy4u</a>
+    <a class="brand" href="/">dummy4u</a>
     <nav aria-label="Primary">
-      <a href="index.html">All tools</a>
-      <a href="imei/index.html">IMEI generator</a>
+      <a href="/">All tools</a>
+      <a href="/imei/">IMEI generator</a>
     </nav>
   </div>
 </header>
@@ -37,14 +37,14 @@
       <p>Most existing generators solve that but bury the tool under an interstitial, three ad units, and four hundred words of throat-clearing before the button. Every page here puts the tool at the top, returns a result in a single click, and keeps the explanatory material below it for the people who want it. A page is a shared stylesheet and two small scripts, with no framework, no tracker, and no fonts fetched from anywhere. Each tool ships only its own logic, so opening one never downloads the code for the others.</p>
 
       <h2>How it works</h2>
-      <p>Randomness comes from your browser's cryptographic generator, <code>crypto.getRandomValues</code>, never <code>Math.random</code>, with rejection sampling so that no value is favoured over another. Where a format has structure — a Luhn checksum on an IMEI, the version and variant bits of a UUID — it is computed correctly rather than approximated. The <a href="imei/imei-format-guide.html">IMEI format guide</a> sets out one of those algorithms in full, with code you can check against.</p>
+      <p>Randomness comes from your browser's cryptographic generator, <code>crypto.getRandomValues</code>, never <code>Math.random</code>, with rejection sampling so that no value is favoured over another. Where a format has structure — a Luhn checksum on an IMEI, the version and variant bits of a UUID — it is computed correctly rather than approximated. The <a href="/imei/imei-format-guide.html">IMEI format guide</a> sets out one of those algorithms in full, with code you can check against.</p>
       <p>Bulk generation is done in a single pass with a pooled random buffer; a hundred thousand values take a few tens of milliseconds and the page reports the actual figure each time, so you can see for yourself that nothing is being fetched.</p>
 
       <h2>What we will not build</h2>
       <p>We do not generate IMEIs targeted at a specific manufacturer's allocated TAC range, we do not generate expiry dates or security codes alongside card numbers, and we do not offer blocklist lookups, unlocking, BIN lookups, or anything that would help pass a fabricated number off as real. Those uses are outside what this site is for, and several of them are criminal offences. Test data is test data; where a tool produces a secret instead, as the password generator does, it stays on your machine and we keep no copy.</p>
 
       <h2>Corrections</h2>
-      <p>If something on this site is technically wrong, we would rather know. The <a href="contact.html">contact page</a> has an address, and corrections are made promptly.</p>
+      <p>If something on this site is technically wrong, we would rather know. The <a href="/contact.html">contact page</a> has an address, and corrections are made promptly.</p>
     </div>
   </div>
 </main>
@@ -52,11 +52,11 @@
 <footer class="site-footer">
   <div class="wrap">
     <nav aria-label="Footer">
-      <a href="index.html">All tools</a>
-      <a href="about.html">About</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="contact.html">Contact</a>
+      <a href="/">All tools</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/contact.html">Contact</a>
     </nav>
     <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
     <p>&copy; 2026 dummy4u</p>

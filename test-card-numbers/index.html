@@ -46,17 +46,17 @@
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="../index.html">dummy4u</a>
+    <a class="brand" href="/">dummy4u</a>
     <nav aria-label="Primary">
-      <a href="../index.html">All tools</a>
-      <a href="index.html" aria-current="page">Test cards</a>
+      <a href="/">All tools</a>
+      <a href="/test-card-numbers/" aria-current="page">Test cards</a>
     </nav>
   </div>
 </header>
 
 <main>
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All tools</a> <span aria-hidden="true">&rsaquo;</span> Test card numbers</nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">All tools</a> <span aria-hidden="true">&rsaquo;</span> Test card numbers</nav>
     <div class="hero">
       <h1>Test Card Number Generator</h1>
       <p class="tagline">Luhn-valid numbers with correct brand structure, for testing payment forms. Not issued to anyone and impossible to charge.</p>
@@ -144,7 +144,7 @@
       <ul>
         <li>The <strong>Issuer Identification Number</strong> — the first six or eight digits, commonly called the BIN — identifies the network and the issuing institution. This is what tells a form whether you have typed a Visa or an Amex, usually from the first one or two digits alone.</li>
         <li>The <strong>individual account identifier</strong> fills the middle and is assigned by the issuer.</li>
-        <li>The <strong>check digit</strong> at the end is a Luhn checksum over everything before it, exactly as on an <a href="../imei/index.html">IMEI</a>.</li>
+        <li>The <strong>check digit</strong> at the end is a Luhn checksum over everything before it, exactly as on an <a href="/imei/">IMEI</a>.</li>
       </ul>
 
       <div class="table-scroll">
@@ -168,7 +168,7 @@
         <li><strong>They are not issued.</strong> No bank has allocated them, no account sits behind them, and no money can move.</li>
         <li><strong>They will be declined.</strong> A real processor performs an authorisation against the issuer. There is no issuer here to answer.</li>
         <li><strong>They will not pass a sandbox's success path</strong> either, unless the sandbox only checks the format. Use the published numbers above for that.</li>
-        <li><strong>They are not a way around anything.</strong> Using a generated number to open an account, claim a trial, or present as a means of payment is fraud, is prohibited by the <a href="../terms.html">terms of use</a>, and does not work — the authorisation fails.</li>
+        <li><strong>They are not a way around anything.</strong> Using a generated number to open an account, claim a trial, or present as a means of payment is fraud, is prohibited by the <a href="/terms.html">terms of use</a>, and does not work — the authorisation fails.</li>
       </ul>
 
       <h2>The reason this tool exists</h2>
@@ -177,7 +177,7 @@
       <h2>Common questions</h2>
       <dl class="faq">
         <dt>Is anything sent to a server?</dt>
-        <dd>No. Generation happens in your browser and the page makes no network requests. See the <a href="../privacy.html">privacy policy</a>.</dd>
+        <dd>No. Generation happens in your browser and the page makes no network requests. See the <a href="/privacy.html">privacy policy</a>.</dd>
 
         <dt>Could a generated number match a real one by chance?</dt>
         <dd>In principle a randomly generated number can coincide with an issued one, which is why it is worthless as anything but test data — it carries no name, no expiry, no CVC, and no authorisation will succeed against it. Treat any match as coincidence and use the published test numbers for anything touching a gateway.</dd>
@@ -190,8 +190,8 @@
       </dl>
 
       <ul class="card-links">
-        <li><a href="../uuid/index.html"><strong>UUID generator</strong><span>v4 and time-ordered v7, with CSV export.</span></a></li>
-        <li><a href="../imei/index.html"><strong>IMEI generator</strong><span>Luhn-valid device identifiers for test fixtures.</span></a></li>
+        <li><a href="/uuid/"><strong>UUID generator</strong><span>v4 and time-ordered v7, with CSV export.</span></a></li>
+        <li><a href="/imei/"><strong>IMEI generator</strong><span>Luhn-valid device identifiers for test fixtures.</span></a></li>
       </ul>
 
     </div>
@@ -203,11 +203,11 @@
 <footer class="site-footer">
   <div class="wrap">
     <nav aria-label="Footer">
-      <a href="../index.html">All tools</a>
-      <a href="../about.html">About</a>
-      <a href="../privacy.html">Privacy</a>
-      <a href="../terms.html">Terms</a>
-      <a href="../contact.html">Contact</a>
+      <a href="/">All tools</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/contact.html">Contact</a>
     </nav>
     <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
     <p>&copy; 2026 dummy4u</p>

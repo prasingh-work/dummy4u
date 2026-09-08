@@ -46,11 +46,11 @@
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="../index.html">dummy4u</a>
+    <a class="brand" href="/">dummy4u</a>
     <nav aria-label="Primary">
-      <a href="index.html">Generate</a>
-      <a href="validator.html" aria-current="page">Validate</a>
-      <a href="imei-format-guide.html">Format guide</a>
+      <a href="/imei/">Generate</a>
+      <a href="/imei/validator.html" aria-current="page">Validate</a>
+      <a href="/imei/imei-format-guide.html">Format guide</a>
     </nav>
   </div>
 </header>
@@ -58,7 +58,7 @@
 <main>
   <div class="wrap">
 
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">All tools</a> <span aria-hidden="true">&rsaquo;</span> IMEI validator</nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">All tools</a> <span aria-hidden="true">&rsaquo;</span> IMEI validator</nav>
     <div class="hero">
       <h1>IMEI Validator</h1>
       <p class="tagline">Paste a number. Get the checksum verdict and the parts it breaks into.</p>
@@ -122,12 +122,12 @@
                 d -= 9
         total += d
     return total % 10 == 0</code></pre>
-      <p>The <a href="imei-format-guide.html">format guide</a> has the same routine in JavaScript, along with the version that computes a check digit rather than verifying one.</p>
+      <p>The <a href="/imei/imei-format-guide.html">format guide</a> has the same routine in JavaScript, along with the version that computes a check digit rather than verifying one.</p>
 
       <h2>Common questions</h2>
       <dl class="faq">
         <dt>Is my IMEI uploaded anywhere?</dt>
-        <dd>No. The check runs in your browser and the number never leaves your device. There is no server-side component to receive it. Details are in the <a href="../privacy.html">privacy policy</a>.</dd>
+        <dd>No. The check runs in your browser and the number never leaves your device. There is no server-side component to receive it. Details are in the <a href="/privacy.html">privacy policy</a>.</dd>
 
         <dt>Can I check whether a phone is stolen or blacklisted?</dt>
         <dd>Not here. Blocklist status lives in the GSMA CEIR and in carrier registries; checking it requires an authorised lookup service, and in most countries your carrier or national regulator provides one free.</dd>
@@ -136,7 +136,7 @@
         <dd>Not from this page. The first eight digits — the TAC — do encode the model, but resolving them requires the GSMA's allocation database, which is licensed rather than public.</dd>
 
         <dt>Do numbers from the generator pass this check?</dt>
-        <dd>Yes, by construction. The <a href="index.html">generator</a> computes a correct check digit for every number it produces.</dd>
+        <dd>Yes, by construction. The <a href="/imei/">generator</a> computes a correct check digit for every number it produces.</dd>
       </dl>
 
     </div>
@@ -148,11 +148,11 @@
 <footer class="site-footer">
   <div class="wrap">
     <nav aria-label="Footer">
-      <a href="../index.html">All tools</a>
-      <a href="../about.html">About</a>
-      <a href="../privacy.html">Privacy</a>
-      <a href="../terms.html">Terms</a>
-      <a href="../contact.html">Contact</a>
+      <a href="/">All tools</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/contact.html">Contact</a>
     </nav>
     <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
     <p>&copy; 2026 dummy4u</p>
