@@ -176,27 +176,24 @@ Why generation is fast:
 - Rejection sampling (discard bytes `>= 250` for digits, `>= 255` for the 15-entry RBI table) removes modulo bias in a single pass.
 - The on-screen list is one text node capped at 300 rows; the full batch goes to the CSV rather than into the DOM.
 
-## AdSense readiness
+## No advertising
 
-Built against the current Google Publisher Policies, not folklore.
+The site carries no ads, no analytics, and no third-party scripts of any kind.
+Ad containers, the AdSense-specific copy in the privacy policy and terms, and
+`ads.txt.example` were all removed deliberately — an empty ad slot still
+reserves blank space on the page and still announces "Advertisement" to screen
+readers, and a privacy policy describing cookies you do not set is simply
+inaccurate.
 
-**Done:**
+The content depth on each page was originally written with an AdSense review in
+mind. It is worth keeping regardless: it is what the pages rank on, and it is
+the reason a visitor who wants to understand the format can, without the tool
+being buried under it.
 
-- Original content on every page: 1,073 words on the IMEI format guide, 820 on the IMEI generator, 788 on the UUID generator, 766 on the password generator, 679 on the hub, 585 on the validator — all written for the audience that actually uses the tool, none of it padding.
-- Privacy policy covering advertising cookies, third-party vendors, the Google Ads Settings opt-out, EEA/UK/Swiss consent, CCPA "sharing", children, retention and data rights.
-- Terms of use with an explicit prohibited-use section. This is the direct mitigation for the *enabling dishonest behavior* policy, which bans content that "helps users to mislead others" — the page states plainly that generated numbers cannot unlock, unblock, or impersonate a device, and that reprogramming a handset's IMEI is a criminal offence.
-- About and Contact pages with a real identity and a working address.
-- Header and footer navigation reaching every page; no orphans.
-- Ad slots (`.ad-slot`) placed **below** the tool only, and sparse. Google's Inventory Value policy disallows screens carrying more ad material than publisher content.
-
-**You still need to:**
-
-1. **Deploy and get indexed.** Submit `sitemap.xml` in Google Search Console and wait for the pages to be indexed before applying. Applying from an unindexed domain is the most common self-inflicted rejection.
-2. **Apply, then paste the AdSense snippet** into the `<head>` and the `.ad-slot` divs. They are empty containers with `min-height: 90px`, so nothing shifts when the ads arrive.
-3. **Rename `ads.txt.example` to `ads.txt`** with your real publisher ID, *after* approval. Do not deploy it before then: an `ads.txt` that does not list your real ID tells ad buyers your inventory is unauthorised.
-4. **Turn on the European regulations message** in AdSense under Privacy & messaging. Google's own message is a TCF-certified CMP, so you do not need a third-party consent script — which is what keeps the page light. Since 16 January 2024, serving personalised ads to EEA/UK traffic without a certified CMP limits you to Limited Ads.
-
-The site now carries four tools across eleven pages and roughly 7,000 words of original content, which is a materially stronger application than a single-tool domain. If the first attempt is still rejected for low value content, the fix is another tool with real depth behind it, not more ad units.
+If you ever do add advertising, the things that would need to come back are a
+privacy policy section naming the provider and its cookies, a consent mechanism
+for EEA/UK visitors, `ads.txt` at the domain root, and ad containers placed
+below the tool rather than above it.
 
 ## SEO
 

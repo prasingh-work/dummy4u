@@ -475,27 +475,6 @@ select:hover { border-color: var(--muted); }
 
 #single { word-break: break-all; }
 
-/* ---------- ad slots ---------- */
-/* Sparse by design: Google's Inventory Value policy disallows screens with
-   more ad material than publisher content. Never place one above the tool. */
-
-.ad-slot {
-  margin: 30px 0;
-  min-height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.ad-slot::before {
-  content: "Advertisement";
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-}
-
 /* ---------- footer ---------- */
 
 .site-footer {
