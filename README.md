@@ -64,6 +64,31 @@ opened straight from disk still renders with its styling. Page-to-page clicks
 will not work from `file://` — for local testing that needs navigation, run
 `python3 -m http.server 8000` and use `http://localhost:8000`.
 
+### Asset versioning
+
+CSS and JS are referenced with a content-hash query (`style.css?v=12c5abac`).
+GitHub Pages serves assets with `Cache-Control: max-age=600` and that header
+cannot be overridden, so without this a visitor could keep running an old
+script after a deploy. Because the hash changes with the file, a changed file
+is a changed URL.
+
+**After editing any `.css` or `.js`, re-stamp the hashes before committing** —
+otherwise the reference points at the old version:
+
+```sh
+python3 - <<'EOF'
+import hashlib, re, glob, os, posixpath
+h = lambda f: hashlib.md5(open(f,'rb').read()).hexdigest()[:8]
+for p in glob.glob('*.html') + glob.glob('*/*.html'):
+    base = os.path.dirname(p); s = open(p).read()
+    def r(m):
+        ref = m.group(2).split('?')[0]
+        t = posixpath.normpath(posixpath.join(base, ref))
+        return m.group(0) if not os.path.exists(t) else '%s="%s?v=%s"' % (m.group(1), ref, h(t))
+    open(p,'w').write(re.sub(r'(href|src)="([^"]+\.(?:css|js)(?:\?v=[0-9a-f]+)?)"', r, s))
+EOF
+```
+
 ### Page weight
 
 | Page | Cold cache | Warm cache |
