@@ -43,10 +43,6 @@
     return list;
   }
 
-  function format(imei) {
-    return imei.slice(0, 2) + "-" + imei.slice(2, 8) + "-" + imei.slice(8, 14) + "-" + imei.slice(14);
-  }
-
   /* ---------- generator page -------------------------------------------- */
   function initGenerator() {
     var form = document.getElementById("gen-form");
@@ -68,7 +64,7 @@
 
       // Exactly one of the two views is ever visible, chosen by the batch size.
       if (list.length === 1) {
-        singleEl.textContent = format(list[0]);
+        singleEl.textContent = list[0];
         singleEl.hidden = false;
         listEl.hidden = true;
         listTextEl.textContent = "";   // drop the previous batch's text node
