@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>XML Formatter and Validator — Well-Formedness Check</title>
+<meta name="description" content="Format, minify and validate XML in your browser. Reports the line and column of any error, and keeps the declaration, doctype and CDATA intact." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/xml/" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css?v=24be6933" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="XML Formatter and Validator — Well-Formedness Check" />
+<meta property="og:description" content="Format, minify and validate XML in your browser. Reports the line and column of any error, and keeps the declaration, doctype and CDATA intact." />
+<meta property="og:url" content="https://dummy4u.com/xml/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "XML Formatter and Validator",
+  "url": "https://dummy4u.com/xml/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Formats, minifies and checks XML for well-formedness in the browser, preserving the declaration, doctype, comments and CDATA.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "All tools", "item": "https://dummy4u.com/" },
+    { "@type": "ListItem", "position": 2, "name": "XML Formatter and Validator", "item": "https://dummy4u.com/xml/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tool">Skip to the tool</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="/">All tools</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">All tools</a> <span aria-hidden="true">&rsaquo;</span> XML formatter</nav>
+    <div class="hero">
+      <h1>XML Formatter and Validator</h1>
+      <p class="tagline">Formats as you type, tells you where it broke, and does not quietly discard your declaration or doctype.</p>
+    </div>
+
+    <section class="card" id="tool" aria-label="XML formatter and validator">
+      <form id="tool-form">
+        <div class="row">
+          <div class="field">
+            <label class="label" for="indent">Indent</label>
+            <select id="indent">
+              <option value="2" selected>2 spaces</option>
+              <option value="4">4 spaces</option>
+              <option value="tab">Tab</option>
+              <option value="0">Minify</option>
+            </select>
+          </div>
+          <button class="primary" type="submit">Format</button>
+        </div>
+
+        <div class="io">
+          <div>
+            <div class="pane-head">
+              <label class="label" for="input">Input</label>
+              <span class="count" id="in-count"></span>
+            </div>
+            <textarea id="input" spellcheck="false" autocomplete="off" placeholder="&lt;root&gt;&lt;item&gt;paste XML here&lt;/item&gt;&lt;/root&gt;"></textarea>
+          </div>
+          <div>
+            <div class="pane-head">
+              <label class="label" for="output">Output</label>
+              <span class="count" id="out-count"></span>
+            </div>
+            <textarea id="output" spellcheck="false" readonly></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="secondary" id="copy" type="button">Copy</button>
+          <button class="secondary" id="download" type="button">Download</button>
+          <button class="secondary" id="clear" type="button">Clear</button>
+        </div>
+      </form>
+
+      <p class="problem" id="problem" hidden><strong>Not well formed:</strong> <span id="problem-text"></span><code id="excerpt" hidden></code></p>
+      <p class="ok-line" id="ok-line" hidden></p>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="prose">
+
+      <h2>Well-formed is not the same as valid</h2>
+      <p>This page checks <strong>well-formedness</strong>: tags balance, attributes are quoted, there is exactly one root element, and the special characters are escaped. That is the XML equivalent of syntax checking, and it is what fails in practice.</p>
+      <p><strong>Validity</strong> is a stronger claim — that the document also matches a schema, whether a DTD, an XSD or a RELAX NG grammar. That requires the schema itself and a validating processor, neither of which a browser provides. If a system rejects your XML while this page accepts it, a schema is almost certainly the reason: a required element missing, an unexpected child, a value in the wrong format.</p>
+
+      <h2>The five things that are usually wrong</h2>
+      <ul>
+        <li><strong>An unescaped ampersand.</strong> <code>&amp;</code> starts an entity reference, so a bare one in text or an attribute is an error. It must be <code>&amp;amp;</code> — the single most common cause, usually from a URL with query parameters.</li>
+        <li><strong>Mismatched case.</strong> XML is case-sensitive, so <code>&lt;Item&gt;…&lt;/item&gt;</code> does not close.</li>
+        <li><strong>More than one root.</strong> Two sibling elements at the top level is not a document. Wrap them.</li>
+        <li><strong>Unquoted attributes.</strong> <code>&lt;a href=x&gt;</code> is fine in HTML and illegal in XML. Single or double quotes, but always quotes.</li>
+        <li><strong>A raw <code>&lt;</code> in text.</strong> Same as the ampersand: escape it as <code>&amp;lt;</code>, or wrap the block in <code>CDATA</code>.</li>
+      </ul>
+
+      <h2>What the formatter keeps</h2>
+      <p>Most online XML formatters parse your document into a DOM and serialise it back out. That is quick to write and quietly destructive: the XML declaration disappears, the doctype and any internal subset go with it, entity references get expanded, and comments are sometimes dropped.</p>
+      <p>This one indents the original text rather than a reconstruction of it, so the declaration, the doctype, processing instructions, comments and CDATA sections all survive verbatim. The browser's own parser still decides whether the document is well formed — you get its verdict, not a second opinion from reimplemented parsing rules.</p>
+      <p>Elements whose entire content is a single run of text stay on one line, because <code>&lt;title&gt;Dune&lt;/title&gt;</code> spread across three lines helps nobody.</p>
+
+      <h2>A note on whitespace</h2>
+      <p>Indenting XML changes it. In element content, whitespace is data as far as the specification is concerned, and a consumer using <code>xml:space="preserve"</code> or comparing documents byte for byte will notice. For configuration files and API payloads this never matters. For signed documents it matters enormously — an XML signature covers a canonical form, and reformatting invalidates it. Format for reading, not before signing.</p>
+
+      <h2>Common questions</h2>
+      <dl class="faq">
+        <dt>Is my XML uploaded?</dt>
+        <dd>No. Parsing and formatting happen in your browser and the page makes no network requests, which is the reason to use a page like this rather than pasting a production payload somewhere unknown. See the <a href="/privacy.html">privacy policy</a>.</dd>
+
+        <dt>Does it handle namespaces?</dt>
+        <dd>Yes. Prefixes and <code>xmlns</code> declarations are attributes like any other and pass through untouched. Note that well-formedness does not require a prefix to be declared in a way your consumer likes — only that it is syntactically valid.</dd>
+
+        <dt>Can it convert XML to JSON?</dt>
+        <dd>Not yet. The conversion needs a convention for attributes, repeated elements and mixed content, and a bad convention produces output that is technically JSON but useless.</dd>
+
+        <dt>Why is my SOAP or SVG file reported as an error?</dt>
+        <dd>Both are XML, so a genuine error is a genuine error — look at the reported line. The common surprise is HTML pasted in by mistake: unclosed <code>&lt;br&gt;</code> and <code>&lt;img&gt;</code> tags are legal HTML and invalid XML.</dd>
+      </dl>
+
+      <ul class="card-links">
+        <li><a href="/json/"><strong>JSON formatter</strong><span>Format and validate JSON with the exact error position.</span></a></li>
+        <li><a href="/diff/"><strong>Text compare</strong><span>Line-by-line diff of two blocks of text.</span></a></li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="/">All tools</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+<script src="../assets/base.js?v=3966b01a" defer></script>
+<script src="tool.js?v=d5bd6cf5" defer></script>
+</body>
+</html>

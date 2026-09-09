@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Text Compare — Line by Line Diff Tool</title>
+<meta name="description" content="Compare two blocks of text line by line in your browser. Highlights added and removed lines, with options to ignore case, whitespace and blank lines." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/diff/" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css?v=24be6933" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="Text Compare — Line by Line Diff Tool" />
+<meta property="og:description" content="Compare two blocks of text line by line in your browser, with options to ignore case, whitespace and blank lines." />
+<meta property="og:url" content="https://dummy4u.com/diff/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Text Compare",
+  "url": "https://dummy4u.com/diff/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Compares two blocks of text line by line in the browser using Myers' diff algorithm, highlighting added and removed lines.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "All tools", "item": "https://dummy4u.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Text Compare", "item": "https://dummy4u.com/diff/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tool">Skip to the tool</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="/">All tools</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">All tools</a> <span aria-hidden="true">&rsaquo;</span> Text compare</nav>
+    <div class="hero">
+      <h1>Text Compare</h1>
+      <p class="tagline">Paste two versions and see exactly which lines changed. Compares as you type.</p>
+    </div>
+
+    <section class="card" id="tool" aria-label="Text comparison">
+      <form id="tool-form">
+        <div class="io two">
+          <div>
+            <div class="pane-head"><label class="label" for="left">Original</label></div>
+            <textarea id="left" spellcheck="false" autocomplete="off" placeholder="Paste the first version"></textarea>
+          </div>
+          <div>
+            <div class="pane-head"><label class="label" for="right">Changed</label></div>
+            <textarea id="right" spellcheck="false" autocomplete="off" placeholder="Paste the second version"></textarea>
+          </div>
+        </div>
+
+        <fieldset class="opts">
+          <legend class="label">Ignore</legend>
+          <label><input type="checkbox" id="ignore-case" /> Case</label>
+          <label><input type="checkbox" id="ignore-ws" /> Whitespace</label>
+          <label><input type="checkbox" id="ignore-blank" /> Blank lines</label>
+        </fieldset>
+
+        <div class="actions">
+          <button class="primary" type="submit">Compare</button>
+          <button class="secondary" id="swap" type="button">Swap sides</button>
+          <button class="secondary" id="copy" type="button">Copy diff</button>
+          <button class="secondary" id="clear" type="button">Clear</button>
+        </div>
+      </form>
+
+      <pre id="diff-out" aria-live="polite"></pre>
+      <p class="meta-line" id="summary" hidden></p>
+      <p class="problem" id="problem" hidden><strong>Problem:</strong> <span id="problem-text"></span></p>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="prose">
+
+      <h2>How to read the output</h2>
+      <p>Two line-number columns, then a marker, then the line. The first column is the position in the original, the second in the changed version. A line present in both keeps both numbers and is dimmed. A removed line is tinted red and has a number only on the left; an added line is tinted green and has one only on the right.</p>
+      <p>That layout is deliberate: when a block shifts because you inserted something above it, the two columns diverge and you can see by how much. A single-column diff hides that.</p>
+
+      <h2>Why it stays fast</h2>
+      <p>The comparison uses Myers' diff algorithm, the same approach behind <code>git diff</code>. Its cost scales with the <em>size of the difference</em>, not the size of the files, which is the property that matters: two thousand-line files differing in three places are compared essentially instantly, because the algorithm never explores the parts that match.</p>
+      <p>Before that runs, the common opening and closing lines are stripped, which handles the everyday case where you changed something in the middle of a long file. On this page, comparing two 5,000-line files with twenty changes takes under a millisecond. A pathological case — two files of the same length with nothing in common — is the slow one, and even that stays in the low hundreds of milliseconds. Each side is capped at 20,000 lines.</p>
+      <p>The naive approach, an LCS table with one cell per pair of lines, needs 25 million cells for two 5,000-line files. That is why tools built that way ask you to upload instead.</p>
+
+      <h2>The ignore options</h2>
+      <ul>
+        <li><strong>Case</strong> — for comparing identifiers or config keys where casing is inconsistent but irrelevant.</li>
+        <li><strong>Whitespace</strong> — collapses runs of spaces and tabs and trims each line. This is the one to reach for after a reformat, when indentation changed and the code did not.</li>
+        <li><strong>Blank lines</strong> — drops empty lines from both sides entirely, useful when one version has been through an editor that adds or strips them.</li>
+      </ul>
+      <p>These affect only the comparison. The lines shown are always the originals, so you never lose sight of what the text actually says.</p>
+
+      <h2>Line endings and the invisible difference</h2>
+      <p>Two files that look identical but refuse to compare equal are almost always a line-ending problem. Windows uses CRLF, Unix uses LF, and most editors do not show the difference. This tool normalises CRLF to LF before comparing, so that particular ghost does not appear here.</p>
+      <p>A trailing newline is handled the same way — a file ending with a newline and one not ending with a newline are treated as having the same lines, rather than the first appearing to have a phantom empty line at the end. If you specifically need to detect either difference, compare the files' hashes instead: the <a href="/hash/">hash generator</a> will show them as different immediately, because hashing has no notion of insignificant whitespace.</p>
+
+      <h2>Common questions</h2>
+      <dl class="faq">
+        <dt>Is my text uploaded?</dt>
+        <dd>No. The comparison runs in your browser and the page makes no network requests. Worth knowing if the two things you are comparing are production logs or contract drafts. See the <a href="/privacy.html">privacy policy</a>.</dd>
+
+        <dt>Can it highlight changes within a line?</dt>
+        <dd>Not currently — the diff is line-level, so a line with one changed word shows as one removal and one addition. Word-level highlighting is a useful addition and is on the list.</dd>
+
+        <dt>Can I compare two files instead of pasting?</dt>
+        <dd>Not yet. For now, open each file and paste. Nothing about the comparison changes.</dd>
+
+        <dt>Why is a moved block shown as a delete and an add?</dt>
+        <dd>Because a line diff has no concept of movement — the line is gone from one place and present in another. Detecting moves is a genuinely different algorithm, and the tools that attempt it disagree with each other regularly.</dd>
+
+        <dt>Is the copied diff a valid patch file?</dt>
+        <dd>No. Copy gives you the marked-up lines for pasting into a ticket or a message. A unified diff that <code>patch</code> would accept needs hunk headers and file paths, which only make sense when comparing actual files.</dd>
+      </dl>
+
+      <ul class="card-links">
+        <li><a href="/json/"><strong>JSON formatter</strong><span>Sort keys on both sides first, then diff — the changes stand out.</span></a></li>
+        <li><a href="/hash/"><strong>Hash generator</strong><span>Confirm two files are byte-identical, whitespace included.</span></a></li>
+      </ul>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="/">All tools</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+<script src="../assets/base.js?v=3966b01a" defer></script>
+<script src="tool.js?v=6506f512" defer></script>
+</body>
+</html>
