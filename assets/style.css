@@ -499,6 +499,117 @@ select {
 
 #single { word-break: break-all; }
 
+/* ---------- text tools (input/output panes) ---------- */
+
+.io { display: grid; gap: 14px; margin-top: 16px; }
+
+.io textarea {
+  min-height: 120px;
+  max-height: 46vh;
+}
+
+.io textarea[readonly] {
+  background: var(--surface);
+  cursor: text;
+}
+
+.pane-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.pane-head .label { margin: 0; }
+.pane-head .count { font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.problem {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--err);
+  background: var(--bg);
+  border-radius: 0 8px 8px 0;
+  font-size: .85rem;
+}
+
+.problem strong { color: var(--err); }
+.problem code {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--mono);
+  font-size: .8rem;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--muted);
+}
+
+.ok-line {
+  margin: 12px 0 0;
+  font-size: .85rem;
+  color: var(--ok);
+}
+
+/* ---------- hash results ---------- */
+
+.digests { margin-top: 16px; display: grid; gap: 8px; }
+
+.digest {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 4px 12px;
+  align-items: start;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color .15s ease;
+}
+
+.digest:hover { border-color: var(--muted); }
+
+.digest dt {
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 2px;
+}
+
+.digest dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: .8125rem;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+@media (max-width: 420px) {
+  .digest { grid-template-columns: 1fr; gap: 2px; }
+}
+
+.file-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+.file-row input[type="file"] {
+  width: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: .85rem;
+  color: inherit;
+}
+
 /* ---------- footer ---------- */
 
 .site-footer {

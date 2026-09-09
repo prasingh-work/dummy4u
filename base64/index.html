@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Base64 Encoder and Decoder — UTF-8 Safe</title>
+<meta name="description" content="Encode and decode Base64 in your browser, with full UTF-8 support and a URL-safe option. Converts as you type; nothing is uploaded or stored." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/base64/" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css?v=3e47ff95" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="Base64 Encoder and Decoder — UTF-8 Safe" />
+<meta property="og:description" content="Encode and decode Base64 in your browser, with full UTF-8 support and a URL-safe option. Converts as you type; nothing is uploaded or stored." />
+<meta property="og:url" content="https://dummy4u.com/base64/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Base64 Encoder and Decoder",
+  "url": "https://dummy4u.com/base64/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Encodes and decodes Base64 in the browser with full UTF-8 support and a URL-safe alphabet option.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "All tools", "item": "https://dummy4u.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Base64 Encoder and Decoder", "item": "https://dummy4u.com/base64/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tool">Skip to the tool</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="/">All tools</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">All tools</a> <span aria-hidden="true">&rsaquo;</span> Base64</nav>
+    <div class="hero">
+      <h1>Base64 Encoder and Decoder</h1>
+      <p class="tagline">Converts as you type, handles every character UTF-8 can express, and never leaves your browser.</p>
+    </div>
+
+    <section class="card" id="tool" aria-label="Base64 encoder and decoder">
+      <form id="tool-form">
+        <fieldset class="opts">
+          <legend class="label">Direction</legend>
+          <label><input type="radio" name="mode" id="mode-encode" checked /> Encode</label>
+          <label><input type="radio" name="mode" id="mode-decode" /> Decode</label>
+          <label><input type="checkbox" id="url-safe" /> URL-safe alphabet</label>
+        </fieldset>
+
+        <div class="io">
+          <div>
+            <div class="pane-head">
+              <label class="label" for="input">Input</label>
+              <span class="count" id="in-count"></span>
+            </div>
+            <textarea id="input" spellcheck="false" autocomplete="off" placeholder="Paste text or Base64 here"></textarea>
+          </div>
+          <div>
+            <div class="pane-head">
+              <label class="label" for="output">Output</label>
+              <span class="count" id="out-count"></span>
+            </div>
+            <textarea id="output" spellcheck="false" readonly></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="submit">Convert</button>
+          <button class="secondary" id="copy" type="button">Copy</button>
+          <button class="secondary" id="swap" type="button">Use as input</button>
+          <button class="secondary" id="clear" type="button">Clear</button>
+        </div>
+      </form>
+
+      <p class="problem" id="problem" hidden><strong>Problem:</strong> <span id="problem-text"></span></p>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="prose">
+
+      <h2>Base64 is encoding, not encryption</h2>
+      <p>Worth stating plainly because it is the most common misunderstanding: Base64 hides nothing. It is a reversible mapping from arbitrary bytes onto 64 printable characters, designed so binary data survives channels that only tolerate text — email bodies, JSON strings, data URIs, HTTP headers, XML attributes. Anyone can decode it in a second, as this page demonstrates. If a value needs to stay secret, it needs encryption; Base64 on top of that is just transport.</p>
+      <p>The cost of that safety is size. Three bytes become four characters, so output is about 33% larger than input, plus padding. That matters when you inline a large image as a data URI and wonder why the page grew.</p>
+
+      <h2>Why <code>btoa</code> throws on your string</h2>
+      <p>If you have hit <code>InvalidCharacterError</code> in the browser console, this is why: <code>btoa</code> predates JavaScript's Unicode handling and accepts only characters in the Latin-1 range, 0–255. Give it "café" and it manages; give it "日本語" and it throws. Give it something in between and you can get silently mangled output, which is worse.</p>
+      <p>The fix is to convert the text to UTF-8 bytes first and Base64 those bytes:</p>
+      <pre><code>// Encode any string safely
+const b64 = btoa(String.fromCharCode(...new TextEncoder().encode(text)));
+
+// Decode back
+const text = new TextDecoder().decode(
+  Uint8Array.from(atob(b64), c =&gt; c.charCodeAt(0))
+);</code></pre>
+      <p>That spread operator will blow the argument limit on large inputs, so this page chunks the conversion in 32 KB blocks instead. This tool does the UTF-8 step for you in both directions, which is why emoji and CJK text round-trip here without special handling.</p>
+
+      <h2>The URL-safe alphabet</h2>
+      <p>Standard Base64 uses <code>+</code> and <code>/</code>, both of which have meaning in URLs, and <code>=</code> for padding, which has meaning in query strings. RFC 4648 defines a variant substituting <code>-</code> and <code>_</code> and usually dropping the padding. That is what JSON Web Tokens use, which is why a JWT segment often looks like Base64 but fails a strict decoder.</p>
+      <p>This decoder accepts both alphabets and restores missing padding automatically, so you can paste a raw JWT segment or a value lifted from a URL without cleaning it up first. Tick <strong>URL-safe alphabet</strong> to produce that form when encoding.</p>
+
+      <h2>Padding, and why length matters</h2>
+      <p>Base64 works in blocks of three bytes. When the input does not divide evenly, the output is padded with one or two <code>=</code> characters so its length is always a multiple of four. A string whose length leaves a remainder of one is therefore impossible — no combination of bytes produces it — and this tool tells you so rather than returning nonsense. A remainder of two or three is a valid unpadded encoding, and gets padded silently.</p>
+
+      <h2>Common questions</h2>
+      <dl class="faq">
+        <dt>Is my data uploaded?</dt>
+        <dd>No. Encoding and decoding happen in your browser and the page makes no network requests at all. See the <a href="/privacy.html">privacy policy</a>.</dd>
+
+        <dt>Why does my decoded text look like gibberish?</dt>
+        <dd>Either it was not text to begin with — a compressed or encrypted payload decodes to bytes that are not valid UTF-8 — or it was encoded in a different character set. This tool refuses to guess: it reports invalid UTF-8 as an error rather than filling your output with replacement characters.</dd>
+
+        <dt>Can I encode a file?</dt>
+        <dd>Not on this page yet. For a data URI you need the MIME type prefix as well, which is a different job from encoding text.</dd>
+
+        <dt>Is Base64 the same as Base64url or Base32?</dt>
+        <dd>Base64url is the URL-safe variant described above. Base32 uses a 32-character alphabet, is case-insensitive and roughly 60% larger than the input — chosen when data has to survive being read aloud or typed by hand.</dd>
+      </dl>
+
+      <ul class="card-links">
+        <li><a href="/json/"><strong>JSON formatter</strong><span>Format and validate JSON with the exact error position.</span></a></li>
+        <li><a href="/hash/"><strong>Hash generator</strong><span>MD5, SHA-1, SHA-256, SHA-384 and SHA-512.</span></a></li>
+      </ul>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="/">All tools</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+<script src="../assets/base.js?v=3966b01a" defer></script>
+<script src="tool.js?v=7435babd" defer></script>
+</body>
+</html>

@@ -8,7 +8,7 @@
 <meta name="color-scheme" content="light dark" />
 <link rel="canonical" href="https://dummy4u.com/" />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<link rel="stylesheet" href="assets/style.css?v=12c5abac" />
+<link rel="stylesheet" href="assets/style.css?v=3e47ff95" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="dummy4u" />
 <meta property="og:title" content="dummy4u — Free Dummy Data Generators for Testing" />
@@ -21,7 +21,7 @@
   "@type": "WebSite",
   "name": "dummy4u",
   "url": "https://dummy4u.com/",
-  "description": "Free dummy data generators for developers and testers: dummy IMEI numbers, test card numbers, UUIDs and strong passwords."
+  "description": "Free browser-based developer tools: dummy data generators, JSON formatter, Base64 encoder and hash generator."
 }
 </script>
 <script type="application/ld+json">
@@ -33,7 +33,10 @@
     { "@type": "ListItem", "position": 1, "name": "Dummy IMEI Generator", "url": "https://dummy4u.com/imei/" },
     { "@type": "ListItem", "position": 2, "name": "Dummy Credit Card Number Generator", "url": "https://dummy4u.com/test-card-numbers/" },
     { "@type": "ListItem", "position": 3, "name": "Password Generator", "url": "https://dummy4u.com/password/" },
-    { "@type": "ListItem", "position": 4, "name": "UUID Generator", "url": "https://dummy4u.com/uuid/" }
+    { "@type": "ListItem", "position": 4, "name": "UUID Generator", "url": "https://dummy4u.com/uuid/" },
+    { "@type": "ListItem", "position": 5, "name": "JSON Formatter and Validator", "url": "https://dummy4u.com/json/" },
+    { "@type": "ListItem", "position": 6, "name": "Base64 Encoder and Decoder", "url": "https://dummy4u.com/base64/" },
+    { "@type": "ListItem", "position": 7, "name": "Hash Generator", "url": "https://dummy4u.com/hash/" }
   ]
 }
 </script>
@@ -47,10 +50,6 @@
     <a class="brand" href="/">dummy4u</a>
     <nav aria-label="Primary">
       <a href="/" aria-current="page">All tools</a>
-      <a href="/password/">Password</a>
-      <a href="/uuid/">UUID</a>
-      <a href="/test-card-numbers/">Test cards</a>
-      <a href="/imei/">IMEI</a>
     </nav>
   </div>
 </header>
@@ -60,15 +59,22 @@
 
     <div class="hero">
       <h1>Dummy data generators for testing</h1>
-      <p class="tagline">Dummy IMEI numbers, test card numbers, UUIDs and passwords — for people who build and test software. No sign-up, no upload, no waiting.</p>
+      <p class="tagline">Test data, encoders and formatters for people who build software. No sign-up, no upload, no waiting.</p>
     </div>
 
-    <h2 class="section-label" id="tools">Tools</h2>
+    <h2 class="section-label" id="tools">Generators</h2>
     <ul class="card-links">
       <li><a href="/imei/"><strong>Dummy IMEI generator</strong><span>Random, Luhn-valid 15-digit IMEI numbers. One, or up to 100,000 with CSV export.</span></a></li>
       <li><a href="/test-card-numbers/"><strong>Dummy credit card numbers</strong><span>Luhn-valid card numbers for payment form testing. Unissued and unchargeable.</span></a></li>
       <li><a href="/password/"><strong>Password generator</strong><span>Strong random passwords with the exact entropy shown. Nothing stored.</span></a></li>
       <li><a href="/uuid/"><strong>UUID generator</strong><span>Random v4 or time-ordered v7 per RFC 9562, with CSV export.</span></a></li>
+    </ul>
+
+    <h2 class="section-label">Encoders and formatters</h2>
+    <ul class="card-links">
+      <li><a href="/json/"><strong>JSON formatter</strong><span>Format, minify and validate JSON, with the exact line and column of any error.</span></a></li>
+      <li><a href="/base64/"><strong>Base64 encoder</strong><span>Encode and decode Base64 with full UTF-8 support and a URL-safe option.</span></a></li>
+      <li><a href="/hash/"><strong>Hash generator</strong><span>MD5, SHA-1, SHA-256, SHA-384 and SHA-512, for text or a local file.</span></a></li>
     </ul>
 
 

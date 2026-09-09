@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Hash Generator — MD5, SHA-1, SHA-256 and SHA-512</title>
+<meta name="description" content="Generate MD5, SHA-1, SHA-256, SHA-384 and SHA-512 hashes of text or a file, in your browser. Nothing is uploaded; the file never leaves your device." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://dummy4u.com/hash/" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="../assets/style.css?v=3e47ff95" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dummy4u" />
+<meta property="og:title" content="Hash Generator — MD5, SHA-1, SHA-256 and SHA-512" />
+<meta property="og:description" content="Generate MD5, SHA-1, SHA-256, SHA-384 and SHA-512 hashes of text or a file, entirely in your browser." />
+<meta property="og:url" content="https://dummy4u.com/hash/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Hash Generator",
+  "url": "https://dummy4u.com/hash/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Computes MD5, SHA-1, SHA-256, SHA-384 and SHA-512 digests of text or a local file in the browser.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "All tools", "item": "https://dummy4u.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Hash Generator", "item": "https://dummy4u.com/hash/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#tool">Skip to the tool</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">dummy4u</a>
+    <nav aria-label="Primary">
+      <a href="/">All tools</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">All tools</a> <span aria-hidden="true">&rsaquo;</span> Hash generator</nav>
+    <div class="hero">
+      <h1>Hash Generator</h1>
+      <p class="tagline">MD5, SHA-1, SHA-256, SHA-384 and SHA-512, computed as you type. Files are read locally and never uploaded.</p>
+    </div>
+
+    <section class="card" id="tool" aria-label="Hash generator">
+      <form id="tool-form">
+        <fieldset class="opts">
+          <legend class="label">Algorithms</legend>
+          <label><input type="checkbox" id="algo-md5" /> MD5</label>
+          <label><input type="checkbox" id="algo-sha1" /> SHA-1</label>
+          <label><input type="checkbox" id="algo-sha256" checked /> SHA-256</label>
+          <label><input type="checkbox" id="algo-sha384" /> SHA-384</label>
+          <label><input type="checkbox" id="algo-sha512" /> SHA-512</label>
+          <label><input type="checkbox" id="uppercase" /> Uppercase</label>
+        </fieldset>
+
+        <div class="io">
+          <div>
+            <div class="pane-head">
+              <label class="label" for="input">Text</label>
+              <span class="count" id="in-count"></span>
+            </div>
+            <textarea id="input" spellcheck="false" autocomplete="off" placeholder="Type or paste text to hash"></textarea>
+          </div>
+        </div>
+
+        <p class="file-row">
+          <label class="label" for="file" style="margin:0">Or a file</label>
+          <input type="file" id="file" />
+          <span id="file-name"></span>
+        </p>
+
+        <div class="actions">
+          <button class="primary" type="submit">Hash</button>
+          <button class="secondary" id="clear" type="button">Clear</button>
+        </div>
+      </form>
+
+      <div class="digests" id="digests"></div>
+
+      <p class="problem" id="problem" hidden><strong>Note:</strong> <span id="problem-text"></span></p>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="prose">
+
+      <h2>Which algorithm to use</h2>
+      <p>The honest answer for almost every new use: <strong>SHA-256</strong>. It is fast, universally supported, and has no known practical weakness. It is the default here for that reason.</p>
+      <p>The others are worth offering because the world is full of systems that already chose:</p>
+
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Algorithm</th><th>Output</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>MD5</td><td>128 bits, 32 hex characters</td><td>Broken for security. Fine as a non-adversarial checksum</td></tr>
+            <tr><td>SHA-1</td><td>160 bits, 40 hex</td><td>Broken for security. Still seen in Git object IDs and older TLS chains</td></tr>
+            <tr><td>SHA-256</td><td>256 bits, 64 hex</td><td>Recommended</td></tr>
+            <tr><td>SHA-384</td><td>384 bits, 96 hex</td><td>Fine. Common in TLS suites</td></tr>
+            <tr><td>SHA-512</td><td>512 bits, 128 hex</td><td>Fine. Often faster than SHA-256 on 64-bit hardware</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>"Broken" has a precise meaning here. MD5 collisions can be produced in seconds on a laptop, and chosen-prefix collisions — two meaningful files with the same hash — are practical. SHA-1 fell the same way in 2017. So neither can be trusted where an attacker benefits from two inputs colliding: signatures, certificates, deduplicating untrusted uploads, integrity checks on a hostile network. Verifying that a file copied across your own LAN arrived intact is a different problem, and MD5 is perfectly adequate for it.</p>
+
+      <h2>Never use these for passwords</h2>
+      <p>This is the mistake with the worst consequences, so it deserves its own heading. A password database hashed with MD5, SHA-1 or even SHA-256 is barely protected: these functions are designed to be <em>fast</em>, and commodity hardware computes billions of SHA-256 candidates per second. A leaked table falls to a dictionary attack almost immediately.</p>
+      <p>Password storage needs a deliberately slow, salted, memory-hard function — <strong>Argon2id</strong>, <strong>scrypt</strong> or <strong>bcrypt</strong> — with per-user salts and a tuned cost factor. If you need a strong password rather than a hash of one, the <a href="/password/">password generator</a> is next door.</p>
+
+      <h2>Hashing a file</h2>
+      <p>Pick a file and its digest is computed locally — the file is read into memory by your browser and never sent anywhere, which is the point. The usual use is verifying a download against a published checksum: hash the file you received, compare against the string on the vendor's page, and confirm the two match character for character.</p>
+      <p>One caveat on that workflow: a checksum served from the same site as the download proves only that the transfer was not corrupted. If the site itself was compromised, both were replaced. A signature you can verify against a key you already trust is what defends against that.</p>
+
+      <h2>How this is implemented</h2>
+      <p>SHA-1 through SHA-512 come from the Web Crypto API built into your browser, so they are native code, not JavaScript. Web Crypto is only exposed over HTTPS, which is why those algorithms are unavailable if you open this page from a local file.</p>
+      <p>MD5 is not in Web Crypto at all — deliberately, since the standard declines to bless broken primitives — so it is implemented here in JavaScript following RFC 1321. It is verified against the RFC's own test vectors and against block-boundary lengths, so its output matches <code>md5sum</code> and Python's <code>hashlib</code> exactly.</p>
+
+      <h2>Common questions</h2>
+      <dl class="faq">
+        <dt>Is my text or file uploaded?</dt>
+        <dd>No. Everything is computed in your browser, and the page makes no network requests. See the <a href="/privacy.html">privacy policy</a>.</dd>
+
+        <dt>Can a hash be reversed?</dt>
+        <dd>Not by inverting it — hashes discard information. But short or common inputs can be looked up in precomputed tables, which is why "reverse MD5" sites work at all on things like <code>password123</code>. That is a lookup, not a reversal.</dd>
+
+        <dt>Why does an empty input still produce a hash?</dt>
+        <dd>Because the empty string is a valid input. <code>d41d8cd98f00b204e9800998ecf8427e</code> is the MD5 of nothing at all, and recognising it on sight is a useful habit — it usually means a file failed to load.</dd>
+
+        <dt>Do trailing newlines change the result?</dt>
+        <dd>Yes, completely. Hashes have no notion of insignificant whitespace, so a stray newline at the end of a file produces an entirely different digest. This is the most common reason a checksum comparison fails when the content looks identical.</dd>
+      </dl>
+
+      <ul class="card-links">
+        <li><a href="/base64/"><strong>Base64 encoder</strong><span>UTF-8 safe encoding and decoding, with a URL-safe option.</span></a></li>
+        <li><a href="/password/"><strong>Password generator</strong><span>Strong random passwords with the exact entropy shown.</span></a></li>
+      </ul>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="/">All tools</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <p>Every tool on this site runs entirely in your browser. Nothing you enter or generate is transmitted to us or stored anywhere.</p>
+    <p>&copy; 2026 dummy4u</p>
+  </div>
+</footer>
+
+<script src="../assets/base.js?v=3966b01a" defer></script>
+<script src="tool.js?v=ea0b0d4f" defer></script>
+</body>
+</html>
