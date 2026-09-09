@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>IMEI Generator — Random Luhn-Valid Test Numbers</title>
-<meta name="description" content="Generate random, Luhn-valid 15-digit IMEI numbers for testing. One click for a single number, or thousands at once with CSV export. Free, instant, nothing stored." />
+<title>Dummy IMEI Generator — Random Valid IMEI Numbers</title>
+<meta name="description" content="Free dummy IMEI generator. Random, Luhn-valid 15-digit numbers for testing: one, or up to 100,000 with CSV export. Nothing is stored." />
 <meta name="color-scheme" content="light dark" />
 <link rel="canonical" href="https://dummy4u.com/imei/" />
 <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="../assets/style.css" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="dummy4u" />
-<meta property="og:title" content="IMEI Generator — Random Luhn-Valid Test Numbers" />
-<meta property="og:description" content="Generate random, Luhn-valid 15-digit IMEI numbers for testing. Single or bulk, with CSV export." />
+<meta property="og:title" content="Dummy IMEI Generator — Random Valid IMEI Numbers" />
+<meta property="og:description" content="Free dummy IMEI generator. Random, Luhn-valid 15-digit numbers for testing: one, or up to 100,000 with CSV export. Nothing is stored." />
 <meta property="og:url" content="https://dummy4u.com/imei/" />
 <meta name="twitter:card" content="summary" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "IMEI Generator",
+  "name": "Dummy IMEI Generator",
   "url": "https://dummy4u.com/imei/",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Any",
@@ -50,8 +50,8 @@
 
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">All tools</a> <span aria-hidden="true">&rsaquo;</span> IMEI generator</nav>
     <div class="hero">
-      <h1>Random IMEI Generator</h1>
-      <p class="tagline">Luhn-valid 15-digit numbers for test data. One, or a hundred thousand.</p>
+      <h1>Dummy IMEI Generator</h1>
+      <p class="tagline">Random, Luhn-valid 15-digit IMEI numbers for test data. One, or a hundred thousand.</p>
     </div>
 
     <section class="card" id="tool" aria-label="IMEI generator">
@@ -82,7 +82,7 @@
     <div class="prose">
 
       <h2>What this produces</h2>
-      <p>Every number is a syntactically correct IMEI: 15 digits whose final digit is the Luhn check digit of the first 14. It will pass the same format and checksum validation a real IMEI passes, which is the whole point when you are filling a test fixture or exercising an input field.</p>
+      <p>Dummy IMEI, fake IMEI, sample IMEI, test IMEI — they all describe the same thing, and it is what this page produces: a structurally valid identifier that is not registered to any handset. Every number is a syntactically correct IMEI: 15 digits whose final digit is the Luhn check digit of the first 14. It will pass the same format and checksum validation a real IMEI passes, which is the whole point when you are filling a test fixture or exercising an input field.</p>
 
       <div class="table-scroll">
         <table>
@@ -137,6 +137,9 @@
 
         <dt>Why did my batch come back instantly?</dt>
         <dd>Because it is only arithmetic. 100,000 numbers take a few tens of milliseconds; the status line reports the actual time. Nothing is fetched over the network.</dd>
+
+        <dt>Is a dummy IMEI the same as a fake IMEI?</dt>
+        <dd>Yes — the words are interchangeable, and both mean a number that looks structurally correct but belongs to no device. What matters is the distinction between <em>structurally valid</em> and <em>real</em>: these pass a checksum, and they are not registered to anything.</dd>
 
         <dt>Is 15 digits always right?</dt>
         <dd>For an IMEI, yes. A 16-digit number is an IMEISV, where the check digit is replaced by a two-digit software version. The <a href="/imei/imei-format-guide.html">format guide</a> covers the difference.</dd>
